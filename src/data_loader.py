@@ -4,15 +4,13 @@ from typing import Union, Iterator, Tuple, List, Optional
 from pathlib import Path
 from itertools import islice, chain
 import logging
-
+import random
+from random import shuffle
 import torch
 from transformers import AutoProcessor
 import numpy as np
-import soundfile as sf
 import h5py
 from tqdm import tqdm
-import random
-from random import shuffle
 
 DataPath = Union[str, Path]
 Array = Union[np.ndarray, torch.Tensor]

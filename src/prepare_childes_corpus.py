@@ -1,4 +1,3 @@
-
 from pathlib import Path
 from argparse import ArgumentParser
 from tqdm import tqdm

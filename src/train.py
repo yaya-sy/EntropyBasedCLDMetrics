@@ -1,11 +1,12 @@
 from data_loader import DataLoader
+from model import EntropyWhisper
 from pathlib import Path
 from argparse import ArgumentParser
-from model import EntropyWhisper
-import torch
 import random
-from tqdm import tqdm
 import logging
+import torch
+from tqdm import tqdm
+import yaml
 
 torch.manual_seed(1797)
 random.seed(1797)
@@ -21,6 +22,7 @@ def train(model: EntropyWhisper,
           batch_size: int=32,
           epochs=5,
           lr: int=0.00056) -> None:
+    """Trainer for """
     output_path.mkdir(exist_ok=True, parents=True)
     mse = torch.nn.MSELoss(reduction="mean")
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
@@ -42,7 +44,7 @@ def train(model: EntropyWhisper,
             loss = mse(predicted_entropy.squeeze(-1), y)
             # compute the derivatives of the loss function in respect to the models parameters
             loss.backward()
-            # update the parameters of the model using the gradient values
+            # update the parameters of the model
             optimizer.step()
 
             epoch_losses += loss.item()
@@ -60,55 +62,33 @@ def train(model: EntropyWhisper,
         log_file.write("\n".join(logs))
 
 def main():
-    parser = ArgumentParser(description='A script for training text entropy prediction from a give.')
-    parser.add_argument("-c", "--checkpoint",
-                        required=True,
-                        help="Huggingface path to the whisper model.")
-    parser.add_argument("-o", "--output_folder",
-                        required=True,
-                        help="Where the trained model will be stored.")
-    parser.add_argument("-b", "--batch_size",
-                        default=64,
-                        type=int,
-                        help="The batch size.")
-    parser.add_argument("-e", "--epochs",
-                        type=int,
-                        default=5,
-                        help="The number of epochs")
-    parser.add_argument("-l", "--learning_rate",
-                        type=float,
-                        default=0.00056,
-                        help="The number of epochs")
-    parser.add_argument("-u", "--sorted_utterances",
-                        required=True,
-                        help="File containing ids sorted by utterances length.")
-    parser.add_argument("-d", "--h5_data",
-                        required=True,
-                        help="Path to the file containing utterances.")
-    parser.add_argument("-t", "--targets",
-                        required=True,
-                        help="Path to the targets for each utterance in the utterances_file.")
-    parser.add_argument("-s", "--sub_hours",
-                        required=False,
-                        default=None,
-                        type=int,
-                        help="The number of hours to use for training.")
-    parser.add_argument("-n", "--model_name",
-                        required=True,
-                        help="The name of the model.")
-
+    parser = ArgumentParser()
+    parser.add_argument("-c",
+                    "--config",
+                    required=True,
+                    help="The yaml config (the same used during the training).")
+    
     args = parser.parse_args()
+    with open(args.config, "r") as config_file:
+        config = yaml.safe_load(config_file)
+
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     LOGGER.info(f"Using device {device}")
-    model = EntropyWhisper(args.checkpoint).to(device)
-    output_folder = Path(args.output_folder)
+    model = EntropyWhisper(config["checkpoint"]).to(device)
+    output_folder = Path(config["output_folder"])
     output_folder.mkdir(exist_ok=True, parents=True)
-    data_loader = DataLoader(args.h5_data,
-                             args.sorted_utterances,
-                             args.targets,
-                             args.checkpoint,
-                             sub_hours=args.sub_hours)
-    train(model, device, output_folder, data_loader, args.model_name, args.batch_size, args.epochs, args.learning_rate)
+    data_loader = DataLoader(h5_file=config["h5_data"],
+                             utterances=config["utterances"],
+                             targets=config["targets"],
+                             checkpoint=config["checkpoint"])
+    train(model=model,
+          device=device,
+          output_folder=output_folder,
+          data_loader=data_loader,
+          model_name=config["model_name"],
+          batch_size=config["batch_size"],
+          epochs=config["epochs"],
+          lr=config["learning_rate"])
 
 if __name__ == "__main__":
     main()
