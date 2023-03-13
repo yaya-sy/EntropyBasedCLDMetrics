@@ -64,9 +64,9 @@ def train(model: EntropyWhisper,
 def main():
     parser = ArgumentParser()
     parser.add_argument("-c",
-                    "--config",
-                    required=True,
-                    help="The yaml config (the same used during the training).")
+                        "--config",
+                        required=True,
+                        help="The yaml config (the same used during the training).")
     
     args = parser.parse_args()
     with open(args.config, "r") as config_file:
