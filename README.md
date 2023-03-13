@@ -4,7 +4,7 @@ Github repository accompanying the paper "Measuring language development from ch
 - `checkpoints/` contains all the trained model (`.pt` for pytorch models and `.arpa` for [KenLM](https://github.com/kpu/kenlm) language models)
 - `data/` contains all the raw data used in the different experiments.
 - `configs/` contains all the necessary options to train/test the models.
-- `results/` contains all the csv storing the results.
+- `results/` contains all the csvs storing the results.
 - `src/` contains all the source code.
 
 For reproducing all the experiments, you will need to:
@@ -16,7 +16,7 @@ For reproducing all the experiments, you will need to:
 
 # Python environment
 
-`TODO: recreate a clean conda env`
+`TODO: recreate a clean version conda env`
 
 # Prepare the data
 
@@ -27,6 +27,7 @@ For reproducing all the experiments, you will need to:
 `TODO`
 
 # Run the testing
+`TODO`
 
 # Analysis
 
