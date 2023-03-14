@@ -26,5 +26,5 @@ class EntropyWhisper(nn.Module):
             # extract Whisper contextual representation of the input speech
             whisper_outputs = self.whisper.encoder(x)
             hidden_states = whisper_outputs.last_hidden_state # out dim in [batch_size, seq_len, d_model]
-        pooled = hidden_states.mean(1) # out dim [batch_size, d_model]
+        pooled = hidden_states.mean(1) # out dim in [batch_size, d_model]
         return pooled @ self.w

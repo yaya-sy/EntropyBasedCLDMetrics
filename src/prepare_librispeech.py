@@ -1,6 +1,5 @@
 from pathlib import Path
 from argparse import ArgumentParser
-from itertools import tee
 import re
 from tqdm import tqdm
 

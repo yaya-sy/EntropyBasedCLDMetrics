@@ -18,7 +18,20 @@ For reproducing all the experiments, you will need to:
 
 `TODO: recreate a clean version conda env`
 
-# Prepare the data
+# Data preparation
+
+## Prepare the librispeech data for phones _n_-gram language model
+
+```shell
+python src/librispeech_for_ngram_lm.py -o data/training
+```
+
+## _n_-gram language model training
+
+We need to first train the _n_-gram language model in order to prepare the data for the other experiments.
+
+For training the _n_-gram language model, you will need to install [KenLM](https://github.com/kpu/kenlm). Once installed in the current directory, you can run the training:
+
 
 `TODO`
 
