@@ -23,7 +23,7 @@ For reproducing all the experiments, you will need to:
 ## Prepare the librispeech data for phones _n_-gram language model
 
 ```shell
-python src/librispeech_for_ngram_lm.py -o data/training
+python src/librispeech_for_ngram_lm.py -o data/ngram_lm
 ```
 
 ## _n_-gram language model training

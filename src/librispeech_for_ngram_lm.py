@@ -24,7 +24,7 @@ def get_utterances(input_folder: Path, output_folder: Path) -> None:
                     output_file.write(f"{line}\n")
 
 def phonemize(inpu_file: Union[Path, str], output_folder: Path) -> None:
-    """Mapping each utterance to its orthographic form, its spoken form."""
+    """Mapping each orthographic utterance to its phonemic version."""
     separator = phonemizer.separator.Separator(phone=' ', word='  ')
     with open(inpu_file, "r") as transcription_file:
         utterances = [line.strip() for line in transcription_file]
@@ -53,7 +53,7 @@ def main():
 
     if args.input_folder is not None:
         get_utterances(Path(args.input_folder), output_folder)
-    phonemize("data/training/librispeech.orthographic", output_folder)
+    phonemize("data/ngram_lm/librispeech.orthographic", output_folder)
 if __name__ == "__main__":
     main()
     # phonemize(Path("/scratch1/data/raw_data/LibriSpeech/train-clean-360/"), Path("data/training"))
