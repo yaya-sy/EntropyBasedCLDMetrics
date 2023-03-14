@@ -1,5 +1,6 @@
-from .utterances_cleaner_thomas import UtterancesCleaner
+from utterances_cleaner_thomas import UtterancesCleaner
 from argparse import ArgumentParser
+from collections import defaultdict
 from pathlib import Path
 import pandas as pd
 import pylangacq
@@ -21,20 +22,20 @@ def get_data(cha_folder: Path):
         cha_file = cha_folder / "raw" / filename
         cha = pylangacq.read_chat(str(cha_file))
         age = cha.ages(months=True)[0]
-        data = {"age" : age, "raw_age": cha_file.stem, "data": []}
+        data = {"age" : age, "raw_age": cha_file.stem, "data": defaultdict(list)}
         for utterance, onset, offset, speaker_role in needed_columns:
-            utterance = pylangacq.chat._clean_utterance(utterance)
+            cleaned = pylangacq.chat._clean_utterance(utterance)
             cleaned = CLEANER.clean(utterance)
-            data["data"].append((speaker_role, utterance, cleaned, onset, offset))
+            data["data"][speaker_role].append((utterance, cleaned, onset, offset))
         yield data
 
-def write_utterances(utterance: str, folder: Path, suffix: str, idx: int) -> None:
+def write_utterances(utterances: str, output_file: Path) -> None:
     """Writes utterances in folder with one utterance by file."""
-    folder.mkdir(exist_ok=True, parents=False)
-    with open(folder / f"utterance_{idx:04d}.{suffix}", "w") as utterance_file:
-        utterance_file.write(utterance)
+    with open(output_file, "w") as utterance_file:
+        for utterance in utterances:
+            utterance_file.write(f"{utterance}\n")
 
-def make_folder(cha_folder: Path, output_folder: Path, child_name: str):
+def make_folder(cha_folder: Path, output_folder: Path):
     """
     Creates the folders for the different utterances types:\
     orthographic, cleaned, timemarks.
@@ -43,7 +44,7 @@ def make_folder(cha_folder: Path, output_folder: Path, child_name: str):
     for the readability and the transparency of the different\
     stages.
     """
-    
+    child_name = "Thomas"
     allowed_speakers = {"Mother", "Target_Child"}
     for data in get_data(cha_folder):
         age_orthographic_folder = output_folder / "orthographic" / child_name / data["raw_age"]
@@ -53,16 +54,21 @@ def make_folder(cha_folder: Path, output_folder: Path, child_name: str):
         age_timemarks_folder = output_folder / "timemarks" / child_name / data["raw_age"]
         age_timemarks_folder.mkdir(exist_ok=True, parents=True)
 
-        for idx, (speaker_role, utterance, cleaned, onset, offset) in enumerate(data["data"]):
+        for speaker_role in data["data"]:
+            speaker_data = list(zip(*data["data"][speaker_role]))
+            utterances, cleaneds, onsets, offsets = speaker_data
+            timemarks = [f"{onset}\t{offset}" for onset, offset in zip(onsets, offsets)]
             if speaker_role not in allowed_speakers:
                 continue
-            utterance_orthographic_output = age_orthographic_folder / speaker_role
-            utterance_cleaned_output = age_cleaned_folder / speaker_role
-            utterance_timemarks_output = age_timemarks_folder / speaker_role
+            assert len(utterances) == len(cleaneds) == len(timemarks), "Mismatch in the data"
+
+            utterance_orthographic_output = age_orthographic_folder / f"{speaker_role}.orthographic"
+            utterance_cleaned_output = age_cleaned_folder / f"{speaker_role}.cleaned"
+            utterance_timemarks_output = age_timemarks_folder / f"{speaker_role}.timemarks"
         
-            write_utterances(utterance, utterance_orthographic_output, "orthographic", idx)
-            write_utterances(cleaned, utterance_cleaned_output, "cleaned", idx)
-            write_utterances(f"{onset}\t{offset}", utterance_timemarks_output, "timemarks", idx)
+            write_utterances(utterances, utterance_orthographic_output)
+            write_utterances(cleaneds, utterance_cleaned_output)
+            write_utterances(timemarks, utterance_timemarks_output)
         
         with open(age_orthographic_folder / "months.txt", "w") as months_file:
             months_file.write(str(data["age"]))
@@ -81,15 +87,15 @@ def make_folder(cha_folder: Path, output_folder: Path, child_name: str):
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument("-c", "--cha_folder",
-                        help="Folder containing the cha annotations.")
-    parser.add_argument("-n", "--child_name",
-                        help="The name of the child.")
+    parser.add_argument("-c", "--childes_corpus",
+                        help="Folder containing childes corpus.",
+                        required=True)
     parser.add_argument("-o", "--output_folder",
-                        help="Where the folder will be stored")
+                        help="Where the folder will be stored",
+                        required=True)
 
     args = parser.parse_args()
-    make_folder(Path(args.cha_folder), Path(args.output_folder), args.child_name)
+    make_folder(Path(args.childes_corpus) / "annotations/cha", Path(args.output_folder))
 
 if __name__ == "__main__":
     main()

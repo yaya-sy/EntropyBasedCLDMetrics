@@ -23,7 +23,7 @@ For reproducing all the experiments, you will need to:
 ## Prepare the librispeech data for phones _n_-gram language model
 
 ```shell
-python src/librispeech_for_ngram_lm.py -o data/ngram_lm
+python src/librispeech_for_ngram_lm.py -o data/ngram_lm/
 ```
 
 ## _n_-gram language model training
@@ -33,7 +33,17 @@ We need to first train the _n_-gram language model in order to prepare the data 
 For training the _n_-gram language model, you will need to install [KenLM](https://github.com/kpu/kenlm). Once installed in the current directory, you can run the training:
 
 
-`TODO`
+```shell
+kenlm/build/bin/lmplz --discount_fallback -o 5 < data/ngram_lm/librispeech.phonemized > checkpoints/librispeech_360.arpa
+```
+
+## Pepare the data for Thomas regression model (Experiment 2A)
+
+You will need to install the Thomas corpus as imported by William N. Havard: https://gin.g-node.org/LAAC-LSCP/thomas
+
+```
+
+```
 
 # Run the training
 
