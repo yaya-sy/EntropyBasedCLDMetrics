@@ -83,29 +83,24 @@ def entropies_file(utterances_segments: Path,
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument("-u", "--utterances_paths",
-                        help="File mapping each utterance id to its audio path and frames.",
-                        required=True)
-    parser.add_argument("-s", "--utterances_segments",
-                        help="File mapping each utterance id to its orthogaphic transcription.",
+    parser.add_argument("-c", "--corpus",
+                        help="Path to the prepared corpus.",
                         required=True)
     parser.add_argument("-a", "--audio_folder",
                         help="Folder where raw recordings are stored.",
-                        required=True)
-    parser.add_argument("-o", "--output_folder",
-                        help="Where the output files will be saved.",
                         required=True)
     parser.add_argument("-m", "--ngram_model",
                         help="The path to the ngram model.",
                         required=True)
 
     args = parser.parse_args()
-    output_folder = Path(args.output_folder)
+    output_folder = Path(args.corpus) / "model_inputs"
     output_folder.mkdir(exist_ok=True, parents=True)
-    utterances_paths = Path(args.utterances_paths)
-    utterances_paths.rename(output_folder / f"{utterances_paths.stem}.paths")
-    h5_dataset(output_folder / f"{utterances_paths.stem}.paths", Path(args.audio_folder), output_folder)
-    entropies_file(Path(args.utterances_segments), args.ngram_model, output_folder)
+    utterances_paths = next(output_folder.glob("*.paths"))
+    utterances_segments = next(output_folder.glob("*.segments"))
+    # utterances_paths.rename(output_folder / f"{utterances_paths.stem}.paths")
+    h5_dataset(utterances_paths, Path(args.audio_folder), output_folder)
+    entropies_file(utterances_segments, args.ngram_model, output_folder)
 
 if __name__ == "__main__":
     main()

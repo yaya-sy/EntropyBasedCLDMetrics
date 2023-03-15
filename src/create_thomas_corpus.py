@@ -23,10 +23,10 @@ def get_data(cha_folder: Path):
         cha = pylangacq.read_chat(str(cha_file))
         age = cha.ages(months=True)[0]
         data = {"age" : age, "raw_age": cha_file.stem, "data": defaultdict(list)}
-        for utterance, onset, offset, speaker_role in needed_columns:
-            cleaned = pylangacq.chat._clean_utterance(utterance)
+        for utterance_raw, onset, offset, speaker_role in needed_columns:
+            utterance = pylangacq.chat._clean_utterance(utterance_raw)
             cleaned = CLEANER.clean(utterance)
-            data["data"][speaker_role].append((utterance, cleaned, onset, offset))
+            data["data"][speaker_role].append((utterance_raw, cleaned, onset, offset))
         yield data
 
 def write_utterances(utterances: str, output_file: Path) -> None:

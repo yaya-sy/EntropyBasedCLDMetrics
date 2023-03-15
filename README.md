@@ -39,15 +39,80 @@ kenlm/build/bin/lmplz --discount_fallback -o 5 < data/ngram_lm/librispeech.phone
 
 ## Pepare the data for Thomas regression model (Experiment 2A)
 
+### Prepare utterances
+
 You will need to install the Thomas corpus as imported by William N. Havard: https://gin.g-node.org/LAAC-LSCP/thomas
 
+Once installed, you can run this command to extract utterances, their cleaned version and the timemarks:
+
+```shell
+python src/create_thomas_corpus.py -c <CHILDES_PATH_THOMAS> -o data/Thomas
 ```
 
+Where `<CHILDES_PATH_THOMAS>` is the path to the childes data.
+ 
+This will create a hierarchical folder:
+
+```
+Thomas\
+    cleaned\
+        age_1\
+            filename.txt
+            months.txt
+            Mother.cleaned
+            Target_Child.cleaned
+        age_1\
+        age_2\
+        ...
+        age_n
+    orthographic\
+        age_1\
+            filename.txt
+            months.txt
+            Mother.orthographic
+            Target_Child.orthographic
+        age_1\
+        age_2\
+        ...
+        age_n
+    timemarks\
+        age_1\
+            filename.txt
+            months.txt
+            Mother.timemarks
+            Target_Child.timemarks
+        age_1\
+        age_2\
+        ...
+        age_n
 ```
 
-# Run the training
+Where `orthographic` contains the raw annotations without cleaning. The `cleaned` contains the cleaned version of the annotations. And `timemarks` contains the onsets and offsets of each utterance in the audio. All of these are aligned, meaning that the `i^{th}` line of each file corresponds to the `i^{th}` line of the other files.
 
-`TODO`
+The `filename.txt` files contains the raw filename and `months.txt` contains the age in months.
+
+### Prepare inputs for the regression model
+
+```shell
+> python src/prepare_childes_corpus.py -i data/Thomas/
+> python src/prepare_input_files.py -c data/Thomas/ -a <AUDIO_FOLDER> -m checkpoints/librispeech_360.arpa
+```
+
+Where `<AUDIO_FOLDER>` is the path to the audio folder. In the case of thomas, the audio folder is located in the downoaded childes corpus.
+
+# Run the trainings
+
+Run the regression model training on Thomas (Experiment 2A):
+
+```bash
+python src/train.py -c configs/thomas.yaml
+```
+
+Run the regression model training on librispeech (Experiment 2B):
+
+```bash
+python src/train.py -c configs/librispeech.yaml
+```
 
 # Run the testing
 `TODO`

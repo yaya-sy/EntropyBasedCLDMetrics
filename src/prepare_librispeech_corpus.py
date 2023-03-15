@@ -15,7 +15,7 @@ def prepare(input_folder: Path, output_folder: Path):
                 utterance_id = re.findall(r"\d+\-\d+\-\d+", line)[0]
                 line = re.sub(f"{utterance_id} ", "", line)
                 line = line.lower().strip()
-                utterances_paths.append(f"{utterance_id}\t{speech_folder / utterance_id}.flac")
+                utterances_paths.append(f"{utterance_id}\t{speech_folder.parent.stem}/{speech_folder.stem}/{utterance_id}.flac")
                 utterances_segments.append(f"{utterance_id}\t{line}")
     
     with open(output_folder / f"librispeech.paths", "w") as paths_file:

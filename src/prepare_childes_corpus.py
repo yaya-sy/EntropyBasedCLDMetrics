@@ -2,8 +2,9 @@ from pathlib import Path
 from argparse import ArgumentParser
 from tqdm import tqdm
 
-def prepare(childes_folder: Path, output_folder: Path, output_filename="providence"):
+def prepare(childes_folder: Path, output_folder: Path):
     """Prepares the input files for the a given childes corpus."""
+    output_filename = childes_folder.stem
     children = list(childes_folder.glob("cleaned/*/"))
     utterances_paths = [] # will contain all the audio path, and the onsets/offsets corresponding to each utterance.
     utterances_segments = [] # will map each audio utterance to its orthographic version.
@@ -17,16 +18,19 @@ def prepare(childes_folder: Path, output_folder: Path, output_filename="providen
                 months = next(months_file)
             with open(age / "filename.txt") as filename_file:
                 filename = next(filename_file)
-            for idx, utterance in enumerate(age.glob("**/*.cleaned")):
-                target_speaker = utterance.parent.stem
+            age_utterances = []
+            for speaker_utterances in age.glob("*.cleaned"):
+                with open(speaker_utterances, "r") as utterances:
+                    target_speaker = speaker_utterances.stem
+                    with open(childes_folder / "timemarks" / child_name / age.stem / f"{target_speaker}.timemarks") as timemarks:
+                        utterances, timemarks = utterances.readlines(), timemarks.readlines()
+                        assert len(utterances) == len(timemarks), "Mismatch between timemarks and utterances"
+                        for utterance, timemark in zip(utterances, timemarks):
+                            age_utterances.append((target_speaker, utterance, timemark))
+            for idx, (target_speaker, utterance, timemark) in enumerate(age_utterances):
                 utterance_id = f"{filename}_{target_speaker}_{idx:05d}"
-                utterance_path = Path("/".join(utterance.parts[-4:]))
-                utterance_stem = utterance_path.stem
-                with open(childes_folder / "timemarks" / utterance_path.parent / f"{utterance_stem}.timemarks") as timemarks_file:
-                    timemarks = next(timemarks_file)
-                    onset, offset = timemarks.split("\t")
-                with open(utterance) as utterance_file:
-                    orthographic = utterance_file.readline().strip()
+                onset, offset = timemark.strip().split("\t")
+                orthographic = utterance.strip()
                 if not orthographic:
                     continue
                 path = f"{child_name}/{filename}" if len(children) > 1 else filename
@@ -45,12 +49,9 @@ def main():
     parser.add_argument("-i", "--input_folder",
                         help="The folder containing the providence data.",
                         type=str)
-    parser.add_argument("-o", "--output_folder",
-                        help="The folder where the output files will be stored.",
-                        type=str)
     
     args = parser.parse_args()
-    output_folder = Path(args.output_folder)
+    output_folder = Path(args.input_folder) / "model_inputs"
     output_folder.mkdir(exist_ok=True, parents=True)
     prepare(Path(args.input_folder), output_folder)
 if __name__ == "__main__":

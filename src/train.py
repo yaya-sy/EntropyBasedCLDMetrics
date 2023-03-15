@@ -80,10 +80,11 @@ def main():
     data_loader = DataLoader(h5_file=config["h5_data"],
                              utterances=config["utterances"],
                              targets=config["targets"],
-                             checkpoint=config["checkpoint"])
+                             checkpoint=config["checkpoint"],
+                             sub_hours=config["sub_hours"])
     train(model=model,
           device=device,
-          output_folder=output_folder,
+          output_path=output_folder,
           data_loader=data_loader,
           model_name=config["model_name"],
           batch_size=config["batch_size"],

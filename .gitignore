@@ -1,2 +1,5 @@
 *.pt
+*.sh
+*.hdf5
 launchers.txt
+estimated/

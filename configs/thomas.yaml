@@ -1,7 +1,7 @@
 checkpoint: openai/whisper-base.en # the whisper model to use as encoder (a huggingface checkpoint)
-utterances: data/thomas/model_inputs/thomas.sorted # path to file containing the utterances (this file has '.sorted' as extension)
-h5_data: data/thomas/model_inputs/thomas.hdf5 # path to the h5py data (this file has '.h5py' as extension)
-targets: data/thomas/model_inputs/thomas.entropies # path to the file storing the targets for training (this file has '.entropies' as extension)
+utterances: data/Thomas/model_inputs/Thomas.sorted # path to file containing the utterances (this file has '.sorted' as extension)
+h5_data: data/Thomas/model_inputs/Thomas.hdf5 # path to the h5py data (this file has '.h5py' as extension)
+targets: data/Thomas/model_inputs/Thomas.entropies # path to the file storing the targets for training (this file has '.entropies' as extension)
 sub_hours: 30 # The number of hours to use for training
 batch_size: 32
 epochs: 5
