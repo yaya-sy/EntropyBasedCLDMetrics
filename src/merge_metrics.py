@@ -26,13 +26,11 @@ for filename in tqdm(metrics_csv["File"]):
 metrics_csv["family"] = families
 
 entropies_csv_Ethan_LBSPCH = entropies_csv_Ethan_LBSPCH.merge(metrics_csv, on = ['family', 'age'])
-print(entropies_csv_Ethan_LBSPCH)
 # entropies_csv_Ethan_LBSPCH = entropies_csv_Ethan_LBSPCH.drop_duplicates("Unnamed: 0")
 # entropies_csv_Ethan_LBSPCH.drop("Unnamed: 0", axis=1, inplace=True)
 entropies_csv_Ethan_LBSPCH.to_csv("csv_results/Metrics_Providence_Thomas_30h_Librispeech_analysis_en.csv")
 
 entropies_csv_LBSPCH = entropies_csv_LBSPCH.merge(metrics_csv, on = ['family', 'age'])
-print(entropies_csv_Ethan_LBSPCH)
 # entropies_csv_LBSPCH = entropies_csv_LBSPCH.drop_duplicates("Unnamed: 0")
 # entropies_csv_LBSPCH.drop("Unnamed: 0", axis=1, inplace=True)
 entropies_csv_LBSPCH.to_csv("csv_results/Metrics_Thomas_30h_LBSPCH_LBSPCH_analysis_en.csv")
@@ -109,6 +107,3 @@ entropies_csv_LBSPCH.to_csv("csv_results/Metrics_Thomas_30h_LBSPCH_LBSPCH_analys
 
 # hubert_tts = hubert_tts.merge(metrics_csv, on = ['family', 'age'])
 # hubert_tts.to_csv("results/HuBERT_tts_metrics.csv")
-
-# print(hubert_nat.sort_values(by="age"))
-# print(hubert_tts.sort_values(by="age"))

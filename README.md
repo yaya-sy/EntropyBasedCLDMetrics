@@ -100,6 +100,31 @@ The `filename.txt` files contains the raw filename and `months.txt` contains the
 
 Where `<AUDIO_FOLDER>` is the path to the audio folder. In the case of thomas, the audio folder is located in the downoaded childes corpus.
 
+## Pepare the data for Librispeech regression model (Experiment 2B)
+
+```bash
+python src/prepare_librispeech_corpus.py -i /scratch1/data/raw_data/LibriSpeech/train-clean-100/ -o data/Librispeech/model_inputs
+```
+
+```bash
+python src/prepare_input_files.py -c data/Librispeech/ -a /scratch1/data/raw_data/LibriSpeech/train-clean-100/ -m checkpoints/librispeech_360.arpa
+```
+
+## Prepare the Providence test data
+
+Create the hierarchical data organization for Providence:
+
+```bash
+python src/create_providence_corpus.py -i <PREPARED_CSV> -c <CHILDES_PATH_PROVIDENCE> -o data/Providence
+```
+
+Create the inputs for the model:
+
+```bash
+> python src/prepare_childes_corpus.py -i data/Providence/
+> python src/prepare_input_files.py -c data/Providence/ -a <AUDIO_FOLDER> -m checkpoints/librispeech_360.arpa
+```
+
 # Run the trainings
 
 Run the regression model training on Thomas (Experiment 2A):

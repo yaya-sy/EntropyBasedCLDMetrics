@@ -3,3 +3,4 @@
 *.hdf5
 launchers.txt
 estimated/
+data/csvs
