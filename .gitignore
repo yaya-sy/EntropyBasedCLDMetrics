@@ -4,3 +4,4 @@
 launchers.txt
 estimated/
 data/csvs
+src/__pycache__/

@@ -102,21 +102,24 @@ Where `<AUDIO_FOLDER>` is the path to the audio folder. In the case of thomas, t
 
 ## Pepare the data for Librispeech regression model (Experiment 2B)
 
-```bash
-python src/prepare_librispeech_corpus.py -i /scratch1/data/raw_data/LibriSpeech/train-clean-100/ -o data/Librispeech/model_inputs
-```
+Create the inputs for the regression model:
 
 ```bash
-python src/prepare_input_files.py -c data/Librispeech/ -a /scratch1/data/raw_data/LibriSpeech/train-clean-100/ -m checkpoints/librispeech_360.arpa
+> python src/prepare_librispeech_corpus.py -i <LIBRISPEECH_DATA_PATH> -o data/Librispeech/model_inputs
+> python src/prepare_input_files.py -c data/Librispeech/ -a <LIBRISPEECH_DATA_PATH> -m checkpoints/librispeech_360.arpa
 ```
 
 ## Prepare the Providence test data
+
+### Prepare utterances
 
 Create the hierarchical data organization for Providence:
 
 ```bash
 python src/create_providence_corpus.py -i <PREPARED_CSV> -c <CHILDES_PATH_PROVIDENCE> -o data/Providence
 ```
+
+### Prepare inputs for the regression model
 
 Create the inputs for the model:
 
