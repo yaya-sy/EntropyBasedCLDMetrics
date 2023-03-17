@@ -174,7 +174,7 @@ python src/train.py -c configs/librispeech.yaml
 
 # Run the testing
 
-## Testing the model of Experiment 1A (Thomas regression model)
+## Testing the model of Experiment 2A (Thomas regression model)
 
 ```bash
 python src/compute_entropies_whisper.py -c configs/test.yaml -m checkpoints/Thomas_30h_Librispeech360_en.pt
