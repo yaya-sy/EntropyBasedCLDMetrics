@@ -57,9 +57,13 @@ def compute_metrics(whisper_checkpoint: str,
 def main():
     parser = ArgumentParser()
     parser.add_argument("-c",
-                    "--config",
-                    required=True,
-                    help="The yaml config (the same used during the training).")
+                        "--config",
+                        required=True,
+                        help="The yaml config (the same used during the training).")
+    parser.add_argument("-m",
+                        "--model",
+                        required=True,
+                        help="The trained model to use")
     
     args = parser.parse_args()
     with open(args.config, "r") as config_file:
@@ -73,10 +77,11 @@ def main():
                              checkpoint=config["checkpoint"])
     
     results_df = compute_metrics(whisper_checkpoint=config["checkpoint"],
-                                 model_checkpoint=config["model_checkpoint"],
+                                 model_checkpoint=args.model,
                                  data_loader=data_loader,
                                  batch_size=config["batch_size"])
-    results_df.to_csv(output_folder / f"{config['output_filename']}.csv")
+    output_filename = Path(args.model).stem
+    results_df.to_csv(output_folder / f"{output_filename}.csv")
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,5 @@
-"""Module for preparing the librispeech data to train ngram lm."""
+"""Module for preparing the librispeech data\
+    in order to train the ngram language model."""
 from typing import Union
 from pathlib import Path
 import re

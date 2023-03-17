@@ -1,9 +1,15 @@
+"""Module for preparing the childes corpora for model training/testing."""
 from pathlib import Path
 from argparse import ArgumentParser
 from tqdm import tqdm
 
 def prepare(childes_folder: Path, output_folder: Path):
-    """Prepares the input files for the a given childes corpus."""
+    """
+    Prepares the input files for a given childes corpus.
+    It will create the utterances file, their audio paths\
+    and the informations (i.e: for each utterance, who speaks\
+    and what age.)
+    """
     output_filename = childes_folder.stem
     children = list(childes_folder.glob("cleaned/*/"))
     utterances_paths = [] # will contain all the audio path, and the onsets/offsets corresponding to each utterance.

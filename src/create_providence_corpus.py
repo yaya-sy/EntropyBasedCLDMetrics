@@ -1,3 +1,5 @@
+"""Module for creating hierarchical data organization of the providence corpus"""
+
 from pathlib import Path
 import string
 import re
@@ -18,7 +20,10 @@ def write_utterances(utterances: str, output_file: Path) -> None:
                 utterance = re.sub(' +', ' ', utterance)
             utterance_file.write(f"{utterance}\n")
 
-def create_folders(groups: DataFrameGroupBy, output_folder: Path, cha_folder: Path) -> None:
+def create_folders(groups: DataFrameGroupBy,
+                   output_folder: Path,
+                   cha_folder: Path) -> None:
+    """Creates the hierarchical data organization for providence."""
     allowed_speakers = {"Mother", "Target_Child"}
     for group, data in tqdm(groups):
         cha_file, speaker = group

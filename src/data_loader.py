@@ -1,4 +1,4 @@
-"""This module contains script for loading the data."""
+"""This module contains script for loading the data for the model."""
 
 from typing import Union, Iterator, Tuple, List, Optional
 from pathlib import Path
@@ -34,18 +34,19 @@ class DataLoader:
 
     Parameters
     ----------
+    - h5_file:
+        Path to the h5py file (numpy arrays audios.)
     - utterances: str, Path
         Path to the file storing the utterance's keys.
     - targets: str, Path.
-        Path to the file containing targets (entropies) for each utterance.\
+        Path to the file containing targets (entropies) for each utterance.
     - checkpoint: str
-        The path to the huggingface checkpoint\
-        of the processor.
+        The path to the huggingface checkpoint of the processor.
     - sampling_rate: int
         The sampling rate of the audios. Default=16000
     - sub_hours: Optional
-        The number of sub hours to consider. Default=None, meaning all the utterances\
-        are considered.
+        The number of sub hours to consider. Default=None, meaning\
+        all the utterances are considered.
     """
 
     def __init__(self,
@@ -54,8 +55,7 @@ class DataLoader:
                  targets: DataPath,
                  checkpoint: str,
                  sampling_rate: int=16000,
-                 sub_hours:Optional[int]=None
-                 ):
+                 sub_hours:Optional[int]=None):
         self.targets_path = targets
         self.load_targets()
         self.h5_file = h5py.File(h5_file)
@@ -90,7 +90,7 @@ class DataLoader:
                 break
 
     def load_targets(self):
-        """Reads and stores targets."""
+        """Reads and stores the targets."""
         self.utterance_targets = dict()
         with open(self.targets_path, "r") as utterances_targets:
             for target in utterances_targets:

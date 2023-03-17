@@ -116,7 +116,7 @@ Thomas\
         age_n
 ```
 
-Where `orthographic` contains the raw annotations without cleaning. The `cleaned` contains the cleaned version of the annotations. And `timemarks` contains the onsets and offsets of each utterance in the audio. All of these are aligned, meaning that the `i^{th}` line of each file corresponds to the `i^{th}` line of the other files.
+Where `orthographic` contains the raw annotations without cleaning. The `cleaned` contains the cleaned version of the annotations. And `timemarks` contains the onsets and offsets of each utterance in the audio. All of these are aligned, meaning that the _i<sup>th</sup>_ line of each file corresponds to the _i<sup>th</sup>_ line of the other files.
 
 The `filename.txt` files contains the raw filename and `months.txt` contains the age in months.
 
@@ -135,9 +135,10 @@ Create the inputs for the regression model:
 
 ```bash
 > python src/prepare_librispeech_corpus.py -i <LIBRISPEECH_TRAIN-CLEAN-100_FOLDER> -o data/Librispeech/model_inputs
-> python src/prepare_input_files.py -c data/Librispeech/ -a <LIBRISPEECH_DATA_PATH> -m checkpoints/librispeech_360.arpa
+> python src/prepare_input_files.py -c data/Librispeech/ -a <LIBRISPEECH_TRAIN-CLEAN-100_FOLDER> -m checkpoints/librispeech_360.arpa
 ```
 
+where `<LIBRISPEECH_TRAIN-CLEAN-100_FOLDER>` is the path to the folder containing the librispeech train-clean-100
 ## Prepare the Providence test data
 
 ### Prepare utterances
@@ -173,16 +174,16 @@ python src/train.py -c configs/librispeech.yaml
 
 # Run the testing
 
-## Testing the model of Experiment 1A
+## Testing the model of Experiment 1A (Thomas regression model)
 
 ```bash
-python src/compute_entropies_whisper.py -c configs/thomas_test.yaml 
+python src/compute_entropies_whisper.py -c configs/test.yaml -m checkpoints/Thomas_30h_Librispeech360_en.pt
 ```
 
-## Testing the model of Experiment 2A
+## Testing the model of Experiment 2A (Librispeech regression model)
 
 ```bash
-python src/compute_entropies_whisper.py -c configs/librispeech_test.yaml 
+python src/compute_entropies_whisper.py -c configs/test.yaml -m checkpoints/Librispeech_100h_Librispeech360_en.pt
 ```
 
 # Analysis

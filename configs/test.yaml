@@ -4,5 +4,4 @@ h5_data: data/Providence/model_inputs/Providence.hdf5 # path to the h5py data (t
 targets: data/Providence/model_inputs/Providence.entropies # path to the file storing the targets for training (this file has '.entropies' as extension)
 batch_size: 32
 model_checkpoint: checkpoints/Thomas_30h_Librispeech360_en.pt # The name at which the model will be saved
-output_filename: Providence_Thomas_30h_Librispeech360_en
 output_folder: results # Where the model checkpoints will be saved

@@ -1,4 +1,5 @@
-"""Module fir creating hierarchical data organization of the thomas corpus"""
+"""Module for creating hierarchical data organization of the thomas corpus"""
+
 from utterances_cleaner_thomas import UtterancesCleaner
 from argparse import ArgumentParser
 from collections import defaultdict
@@ -9,7 +10,7 @@ from tqdm import tqdm
 
 CLEANER = UtterancesCleaner("extra/markers.json")
 
-def get_data(cha_folder: Path):
+def get_data(cha_folder: Path) -> dict:
     """Retrieves all the relevant data from the csv files."""
     converted_folder = (cha_folder / "converted")
     csvs = list(converted_folder.glob("*.csv"))

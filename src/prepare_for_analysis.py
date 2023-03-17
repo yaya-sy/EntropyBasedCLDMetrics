@@ -30,14 +30,12 @@ def main():
                             who produced the utterance at what age, etc.")
     parser.add_argument("-o", "--output_folder",
                         help="The folder to where store the output csv.")
-    parser.add_argument("-f", "--filename",
-                        help="The name under which the CSV will be saved.")
     args = parser.parse_args()
     output_folder = Path(args.output_folder)
     output_folder.mkdir(exist_ok=True, parents=True)
 
     results = get_df(args.input_csv, args.informations_file)
-    results.to_csv(output_folder / f"{args.filename}.csv")
+    results.to_csv(output_folder / f"{args.input_csv}_analysis.csv")
 
 if __name__ == "__main__":
     main()
