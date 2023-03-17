@@ -23,7 +23,7 @@ For reproducing all the experiments, you will need to:
 ## Prepare the librispeech data for phones _n_-gram language model
 
 ```shell
-python src/librispeech_for_ngram_lm.py -o data/ngram_lm/
+python src/librispeech_for_ngram_lm.py -i <LIBRISPEECH_TRAIN-CLEAN-360_FOLDER> -o data/ngram_lm/
 ```
 
 ## _n_-gram language model training
@@ -105,7 +105,7 @@ Where `<AUDIO_FOLDER>` is the path to the audio folder. In the case of thomas, t
 Create the inputs for the regression model:
 
 ```bash
-> python src/prepare_librispeech_corpus.py -i <LIBRISPEECH_DATA_PATH> -o data/Librispeech/model_inputs
+> python src/prepare_librispeech_corpus.py -i <LIBRISPEECH_TRAIN-CLEAN-100_FOLDER> -o data/Librispeech/model_inputs
 > python src/prepare_input_files.py -c data/Librispeech/ -a <LIBRISPEECH_DATA_PATH> -m checkpoints/librispeech_360.arpa
 ```
 
@@ -143,7 +143,18 @@ python src/train.py -c configs/librispeech.yaml
 ```
 
 # Run the testing
-`TODO`
+
+## Testing the model of Experiment 1A
+
+```bash
+python src/compute_entropies_whisper.py -c configs/thomas_test.yaml 
+```
+
+## Testing the model of Experiment 2A
+
+```bash
+python src/compute_entropies_whisper.py -c configs/librispeech_test.yaml 
+```
 
 # Analysis
 

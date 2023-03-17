@@ -72,12 +72,11 @@ def main():
                              targets=config["targets"],
                              checkpoint=config["checkpoint"])
     
-    model_checkpoint = Path(config["output_results"]) / config["model_name"]
     results_df = compute_metrics(whisper_checkpoint=config["checkpoint"],
-                                 model_checkpoint=model_checkpoint,
+                                 model_checkpoint=config["model_checkpoint"],
                                  data_loader=data_loader,
                                  batch_size=config["batch_size"])
-    results_df.to_csv(output_folder / f"{config['model_name']}.csv")
+    results_df.to_csv(output_folder / f"{config['output_filename']}.csv")
 
 if __name__ == "__main__":
     main()
