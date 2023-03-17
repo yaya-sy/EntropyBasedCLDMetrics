@@ -16,7 +16,17 @@ For reproducing all the experiments, you will need to:
 
 # Python environment
 
-`TODO: recreate a clean version conda env`
+First, create the Python environment:
+
+```shell
+conda env create -f environment.yml
+```
+
+and activate it:
+
+```shell
+conda activate ent_cldm
+```
 
 # Data preparation
 
