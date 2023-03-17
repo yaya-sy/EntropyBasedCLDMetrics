@@ -158,6 +158,8 @@ Create the inputs for the model:
 > python src/prepare_input_files.py -c data/Providence/ -a <AUDIO_FOLDER> -m checkpoints/librispeech_360.arpa
 ```
 
+Where `<AUDIO_FOLDER>` is the path to the audio folder. In the case of Providence childes data, the audio folder is `recordings/raw/`
+
 # Run the trainings
 
 Run the regression model training on Thomas (Experiment 2A):
