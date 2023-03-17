@@ -1,3 +1,4 @@
+"""Module fir creating hierarchical data organization of the thomas corpus"""
 from utterances_cleaner_thomas import UtterancesCleaner
 from argparse import ArgumentParser
 from collections import defaultdict
@@ -30,7 +31,7 @@ def get_data(cha_folder: Path):
         yield data
 
 def write_utterances(utterances: str, output_file: Path) -> None:
-    """Writes utterances in folder with one utterance by file."""
+    """Writes utterances in a given file."""
     with open(output_file, "w") as utterance_file:
         for utterance in utterances:
             utterance_file.write(f"{utterance}\n")
@@ -39,10 +40,6 @@ def make_folder(cha_folder: Path, output_folder: Path):
     """
     Creates the folders for the different utterances types:\
     orthographic, cleaned, timemarks.
-    Due to the many folder and file creations,\
-    this way of doing takes some times but it's good\
-    for the readability and the transparency of the different\
-    stages.
     """
     child_name = "Thomas"
     allowed_speakers = {"Mother", "Target_Child"}

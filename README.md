@@ -59,7 +59,7 @@ Once installed, you can run this command to extract utterances, their cleaned ve
 python src/create_thomas_corpus.py -c <CHILDES_PATH_THOMAS> -o data/Thomas
 ```
 
-Where `<CHILDES_PATH_THOMAS>` is the path to the childes data.
+Where `<CHILDES_PATH_THOMAS>` is the path to the installed Thomas data.
  
 This will create a hierarchical folder:
 
@@ -108,7 +108,7 @@ The `filename.txt` files contains the raw filename and `months.txt` contains the
 > python src/prepare_input_files.py -c data/Thomas/ -a <AUDIO_FOLDER> -m checkpoints/librispeech_360.arpa
 ```
 
-Where `<AUDIO_FOLDER>` is the path to the audio folder. In the case of thomas, the audio folder is located in the downoaded childes corpus.
+Where `<AUDIO_FOLDER>` is the path to the audio folder. In the case of Thomas childes data, the audio folder is `recordings/raw/`
 
 ## Pepare the data for Librispeech regression model (Experiment 2B)
 
