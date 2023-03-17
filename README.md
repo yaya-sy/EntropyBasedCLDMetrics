@@ -14,9 +14,16 @@ For reproducing all the experiments, you will need to:
 3) Run the testing
 4) Reproduce the anlaysis (plots and statistical analysis of the results)
 
-# Python environment
+# Working environment
 
-First, create the Python environment:
+Clone this github repos and move to it:
+
+```bash
+git clone https://github.com/yaya-sy/EntropyBasedCLDMetrics.git
+cd EntropyBasedCLDMetrics
+```
+
+Create the Python environment:
 
 ```shell
 conda env create -f environment.yml
@@ -40,8 +47,20 @@ python src/librispeech_for_ngram_lm.py -i <LIBRISPEECH_TRAIN-CLEAN-360_FOLDER> -
 
 We need to first train the _n_-gram language model in order to prepare the data for the other experiments.
 
-For training the _n_-gram language model, you will need to install [KenLM](https://github.com/kpu/kenlm). Once installed in the current directory, you can run the training:
+For training the _n_-gram language model, you will need to install [KenLM](https://github.com/kpu/kenlm):
 
+```bash
+conda install -c anaconda cmake
+git clone https://github.com/kpu/kenlm.git
+cd kenlm
+python setup.py develop
+mkdir -p build
+cd build
+cmake ..
+make -j 4
+```
+
+Once installed in the current directory, you can run the training:
 
 ```shell
 kenlm/build/bin/lmplz --discount_fallback -o 5 < data/ngram_lm/librispeech.phonemized > checkpoints/librispeech_360.arpa
