@@ -38,11 +38,11 @@ def train(model: EntropyWhisper,
             model.zero_grad()
             x = x.to(device)
             y = y.to(device)
-            # predict the entropy of the speech utterance
+            # predict the entropy of the spoken utterance
             predicted_entropy = model(x)
             # compute the mean squared error of the predicted and target entropies
             loss = mse(predicted_entropy.squeeze(-1), y)
-            # compute the derivatives of the loss function in respect to the models parameters
+            # compute the derivatives of the loss function in respect to the parameters of the model
             loss.backward()
             # update the parameters of the model
             optimizer.step()

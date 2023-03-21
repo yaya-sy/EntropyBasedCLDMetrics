@@ -1,0 +1,95 @@
+---
+title: "cldm"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(lme4)
+library(svglite)
+```
+
+```{r}
+experiment_1A <- read.csv("../results/Librispeech_360h_analysis.csv")
+experiment_1B <- read.csv("../results/HuBERT_nat.csv")
+experiment_1C <- read.csv("../results/HuBERT_tts.csv")
+experiment_2A <- read.csv("../results/Thomas_30h_Librispeech_en_analysis.csv")
+```
+
+```{r}
+cbp1 <- c("#D55E00", "#000000", "#CC79A7")
+scaleFUN <- function(x) sprintf("%.1f", x)
+
+plot <- function(data, limits){
+  plt <- data %>%
+      mutate(speaker = fct_reorder2(speaker, age, entropy)) %>%
+      ggplot() + 
+      aes(x=age, y=entropy, color=speaker) +
+      geom_point(aes(x = age, y = entropy),
+                 size = .65) +
+      geom_smooth(linetype = "solid",
+                  se = T,
+                  method = "lm",
+                  formula = y ~ I(1 / x),
+                  fill = "lightgray",
+                  linewidth=1) +
+      guides(color=guide_legend(override.aes=list(fill=NA))) +  
+      theme_bw(base_size = 8) +
+      theme(legend.position="bottom",
+            legend.direction='vertical',
+            legend.title = element_blank(),
+            text = element_text(size = 16)) +
+      scale_color_manual(values = cbp1) +
+      scale_fill_discrete(limits = c("Target_Child", "Mother")) +
+      scale_y_continuous(labels=scaleFUN, limits = limits) +
+      ylab("Entropy") +
+      xlab("Age (months)")
+  return(plt)
+}
+```
+
+```{r}
+plot_exp1A <- plot(experiment_1A, c(2, 8))
+plot_exp1B <- plot(experiment_1B, c(2, 8))
+plot_exp1C <- plot(experiment_1C, NULL)
+plot_exp2A <- plot(experiment_2A, NULL)
+```
+
+```{r}
+plt <- ggarrange(plot_exp1A + rremove("xlab") + rremove("x.text"),
+                 plot_exp1B + rremove("ylab") + rremove("y.text") + rremove("xlab") + rremove("x.text"),
+                 plot_exp1C,
+                 plot_exp2A + rremove("ylab") + rremove("y.text"),
+                 labels = c("1A", "1B", "1C", "2A"),
+                 hjust = c(-15.8, -13.5, -15.8, -13.5),
+                 heights = c(4, 4, 4, 4),
+                 widths = c(4.6, 4, 4.6, 4),
+                 align = "h",
+                 nrow = 2, ncol = 2, common.legend = TRUE, legend="bottom")
+```
+```{r}
+plt
+```
+
+```{r mkdir, engine='bash'}
+# We will save the plot in this folder
+mkdir ../plots
+```
+
+
+```{r}
+ggsave("../plots/results_1A_1B_1C_2A.png", plot = plt, width = 8, height = 7, bg="white")
+```
+
+
+
+
+
+
+

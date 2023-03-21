@@ -2,8 +2,9 @@ checkpoint: openai/whisper-base.en # the whisper model to use as encoder (a hugg
 utterances: data/Librispeech/model_inputs/librispeech.sorted # path to file containing the utterances (this file has '.sorted' as extension)
 h5_data: data/Librispeech/model_inputs/librispeech.hdf5 # path to the h5py data (this file has '.h5py' as extension)
 targets: data/Librispeech/model_inputs/librispeech.entropies # path to the file storing the targets for training (this file has '.entropies' as extension)
+sub_hours: null
 batch_size: 32
 epochs: 5
 learning_rate: 0.00056
-model_name: Librispeech_100h_Librispeech360_en.pt # The name at which the model will be saved
+model_name: Librispeech_100h_Librispeech360_en # The name at which the model will be saved
 output_folder: checkpoints # Where the model checkpoints will be saved

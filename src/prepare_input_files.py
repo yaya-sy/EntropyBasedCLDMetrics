@@ -69,7 +69,7 @@ def entropies_file(utterances_segments: Path,
     separator = phonemizer.separator.Separator(phone=' ', word='  ')
     LOGGER.info("Creating targets file (entropies)...")
     with open(utterances_segments, "r") as text_file:
-        ids, utterances = zip(*[line.strip().split("\t") for line in text_file])
+        ids, utterances = zip(*[line.split("\t") for line in text_file])
         phonemized = phonemizer.phonemize(text=utterances,
                                           strip=True,
                                           preserve_empty_lines=True,
@@ -98,7 +98,6 @@ def main():
     output_folder.mkdir(exist_ok=True, parents=True)
     utterances_paths = next(output_folder.glob("*.paths"))
     utterances_segments = next(output_folder.glob("*.segments"))
-    # utterances_paths.rename(output_folder / f"{utterances_paths.stem}.paths")
     h5_dataset(utterances_paths, Path(args.audio_folder), output_folder)
     entropies_file(utterances_segments, args.ngram_model, output_folder)
 

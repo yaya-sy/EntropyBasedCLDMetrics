@@ -4,36 +4,38 @@ import pylangacq
 from tqdm import tqdm
 
 base_path = Path("/scratch2/whavard/DATA/LSFER/providence/annotations/cha/raw/")
-entropies_csv_Ethan_LBSPCH = pd.read_csv("csv_results/Providence_Thomas_30h_Librispeech_analysis_en.csv")
-entropies_csv_Ethan_LBSPCH = entropies_csv_Ethan_LBSPCH.loc[entropies_csv_Ethan_LBSPCH["speaker"] == "Target_Child"]
-entropies_csv_LBSPCH = pd.read_csv("csv_results/Thomas_30h_LBSPCH_LBSPCH_analysis_en.csv")
-entropies_csv_LBSPCH = entropies_csv_LBSPCH.loc[entropies_csv_LBSPCH["speaker"] == "Target_Child"]
-metrics_csv = pd.read_csv("results/chi.kideval.csv", sep=";")
-metrics_csv = metrics_csv.rename(columns={"Age(Month)": "age"})
 
-families = []
-for filename in tqdm(metrics_csv["File"]):
-    if isinstance(filename, float):
-        families.append(float("nan"))
-        continue
-    families.append(filename.split("/")[0])
-    input_file = base_path / filename
-    cha = pylangacq.read_chat(str(input_file))
-    age = cha.ages(months=True)[0]
-    if age == 0.0:
-        continue
-    metrics_csv.loc[(metrics_csv["File"] == filename), "age"] = age
-metrics_csv["family"] = families
+def main():
+    entropies_csv_Ethan_LBSPCH = pd.read_csv("csv_results/Providence_Thomas_30h_Librispeech_analysis_en.csv")
+    entropies_csv_Ethan_LBSPCH = entropies_csv_Ethan_LBSPCH.loc[entropies_csv_Ethan_LBSPCH["speaker"] == "Target_Child"]
+    entropies_csv_LBSPCH = pd.read_csv("csv_results/Thomas_30h_LBSPCH_LBSPCH_analysis_en.csv")
+    entropies_csv_LBSPCH = entropies_csv_LBSPCH.loc[entropies_csv_LBSPCH["speaker"] == "Target_Child"]
 
-entropies_csv_Ethan_LBSPCH = entropies_csv_Ethan_LBSPCH.merge(metrics_csv, on = ['family', 'age'])
-# entropies_csv_Ethan_LBSPCH = entropies_csv_Ethan_LBSPCH.drop_duplicates("Unnamed: 0")
-# entropies_csv_Ethan_LBSPCH.drop("Unnamed: 0", axis=1, inplace=True)
-entropies_csv_Ethan_LBSPCH.to_csv("csv_results/Metrics_Providence_Thomas_30h_Librispeech_analysis_en.csv")
+    metrics_csv = pd.read_csv("results/chi.kideval.csv", sep=";")
+    metrics_csv = metrics_csv.rename(columns={"Age(Month)": "age"})
+    metrics_csv = get_families(metrics_csv)
 
-entropies_csv_LBSPCH = entropies_csv_LBSPCH.merge(metrics_csv, on = ['family', 'age'])
-# entropies_csv_LBSPCH = entropies_csv_LBSPCH.drop_duplicates("Unnamed: 0")
-# entropies_csv_LBSPCH.drop("Unnamed: 0", axis=1, inplace=True)
-entropies_csv_LBSPCH.to_csv("csv_results/Metrics_Thomas_30h_LBSPCH_LBSPCH_analysis_en.csv")
+    entropies_csv_Ethan_LBSPCH = entropies_csv_Ethan_LBSPCH.merge(metrics_csv, on = ['family', 'age'])
+    entropies_csv_Ethan_LBSPCH.to_csv("csv_results/Metrics_Providence_Thomas_30h_Librispeech_analysis_en.csv")
+
+    entropies_csv_LBSPCH = entropies_csv_LBSPCH.merge(metrics_csv, on = ['family', 'age'])
+    entropies_csv_LBSPCH.to_csv("csv_results/Metrics_Thomas_30h_LBSPCH_LBSPCH_analysis_en.csv")
+
+def get_families(metrics_csv):
+    families = []
+    for filename in tqdm(metrics_csv["File"]):
+        if isinstance(filename, float):
+            families.append(float("nan"))
+            continue
+        families.append(filename.split("/")[0])
+        input_file = base_path / filename
+        cha = pylangacq.read_chat(str(input_file))
+        age = cha.ages(months=True)[0]
+        if age == 0.0:
+            continue
+        metrics_csv.loc[(metrics_csv["File"] == filename), "age"] = age
+    metrics_csv["family"] = families
+    return metrics_csv
 
 # hubert_nat = pd.read_csv("results/HuBERT-nat_entropy_ngram-2-merge-False_mmap.csv")
 # hubert_tts = pd.read_csv("results/HuBERT-tts_entropy_ngram-2-merge-False_mmap.csv")

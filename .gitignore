@@ -1,7 +1,10 @@
 *.pt
 *.sh
 *.hdf5
+*.epochs
+src/create_providence_corpus_old.py
 launchers.txt
 estimated/
 data/csvs
+.RData
 src/__pycache__/

@@ -25,17 +25,12 @@ def main():
     parser = ArgumentParser()
     parser.add_argument("-i", "--input_csv",
                         help="The CSV containing the predited entropies.")
-    parser.add_argument("-t", "--informations_file",
-                        help="The text file containing the informations about\
-                            who produced the utterance at what age, etc.")
-    parser.add_argument("-o", "--output_folder",
-                        help="The folder to where store the output csv.")
     args = parser.parse_args()
-    output_folder = Path(args.output_folder)
+    output_folder = Path("results")
     output_folder.mkdir(exist_ok=True, parents=True)
-
-    results = get_df(args.input_csv, args.informations_file)
-    results.to_csv(output_folder / f"{args.input_csv}_analysis.csv")
+    output_filename = Path(args.input_csv).stem
+    results = get_df(args.input_csv, "../TextSpeechCLDM/data/providence/model_inputs/providence.infos")
+    results.to_csv(output_folder / f"{output_filename}_analysis.csv")
 
 if __name__ == "__main__":
     main()

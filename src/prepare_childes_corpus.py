@@ -37,7 +37,12 @@ def prepare(childes_folder: Path, output_folder: Path):
                 utterance_id = f"{filename}_{target_speaker}_{idx:05d}"
                 onset, offset = timemark.strip().split("\t")
                 orthographic = utterance.strip()
-                if not orthographic:
+                # Important logic here:
+                # a) For training (thomas), we necessary need transcription (entropy) and speech pairs.
+                # So we have to keep only utterances for which we have transcription AND speech.
+                # b) For testing (providence), we may have speech without transcription (incomprehensible speech).
+                # In this case, we will keep the speech for predicting the entropy even if this speech is not transcribed.
+                if not orthographic and childes_folder.stem == "Thomas":
                     continue
                 path = f"{child_name}/{filename}" if len(children) > 1 else filename
                 utterances_paths.append(f"{utterance_id}\t{path}.wav\t{onset}\t{offset}")
