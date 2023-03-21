@@ -232,6 +232,7 @@ This will create a csv file named `Librispeech_100h_Librispeech360_en.csv` in th
 # Analysis
 
 ## Prepare the CSVs for analysis
+
 ### Experiment 1A
 
 ```bash
@@ -240,7 +241,7 @@ python src/prepare_for_analysis.py -i results/Librispeech_360h.csv
 
 This will create a csv file named `Librispeech_360h_analysis.csv` in the folder `results`.
 
-## Experiment 2A
+### Experiment 2A
 
 ```bash
 python src/prepare_for_analysis.py -i results/Thomas_30h_Librispeech_en.csv
@@ -248,7 +249,7 @@ python src/prepare_for_analysis.py -i results/Thomas_30h_Librispeech_en.csv
 
 This will create a csv file named `Thomas_30h_Librispeech_en_analysis.csv` in the folder `results`.
 
-## Experiment 2B
+### Experiment 2B
 
 ```bash
 python src/prepare_for_analysis.py -i results/Librispeech_100h_Librispeech360_en.csv
