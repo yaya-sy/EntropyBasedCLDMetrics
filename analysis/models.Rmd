@@ -1,0 +1,130 @@
+---
+title: "plots"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(lme4)
+library(svglite)
+```
+
+# Read the data
+
+```{r}
+experiment_1A <- read.csv("../results/Librispeech_360h_analysis.csv")
+experiment_1B <- read.csv("../results/HuBERT_nat.csv")
+experiment_1C <- read.csv("../results/HuBERT_tts.csv")
+experiment_2A <- read.csv("../results/Thomas_30h_Librispeech_en_analysis.csv")
+experiment_2B <- read.csv("../results/Librispeech_100h_Librispeech360_en_analysis.csv")
+```
+
+# Normalization
+
+```{r}
+experiment_1A$age <- (experiment_1A$age - min(experiment_1A$age)) / sd(experiment_1A$age)
+
+experiment_1B$age <- (experiment_1B$age - min(experiment_1B$age)) / sd(experiment_1B$age)
+
+experiment_1C$age <- (experiment_1C$age - min(experiment_1C$age)) / sd(experiment_1C$age)
+
+experiment_2A$age <- (experiment_2A$age - min(experiment_2A$age)) / sd(experiment_2A$age)
+
+experiment_2B$age <- (experiment_2B$age - min(experiment_2B$age)) / sd(experiment_2B$age)
+```
+
+## Experiment 1A
+
+```{r}
+experiment_1A_child_model <- lmer(entropy ~ age + (1 + age|family),
+                                  data=filter(experiment_1A, speaker == "Target_Child"))
+experiment_1A_mother_model <- lmer(entropy ~ age + (1 + age|family),
+                                  data=filter(experiment_1A, speaker == "Mother"))
+```
+
+```{r}
+summary(experiment_1A_child_model)
+```
+
+```{r}
+summary(experiment_1A_mother_model)
+```
+
+## Experiment 1B
+
+```{r}
+experiment_1B_child_model <- lmer(entropy ~ age + (1 + age|family),
+                                  data=filter(experiment_1B, speaker == "Target_Child"))
+experiment_1B_mother_model <- lmer(entropy ~ age + (1 + age|family),
+                                  data=filter(experiment_1B, speaker == "Mother"))
+```
+
+```{r}
+summary(experiment_1B_child_model)
+```
+
+```{r}
+summary(experiment_1B_mother_model)
+```
+
+# Experiment 1C
+
+
+```{r}
+experiment_1C_child_model <- lmer(entropy ~ age + (1 + age|family),
+                                  data=filter(experiment_1C, speaker == "Target_Child"))
+experiment_1C_mother_model <- lmer(entropy ~ age + (1 + age|family),
+                                  data=filter(experiment_1C, speaker == "Mother"))
+```
+
+```{r}
+summary(experiment_1C_child_model)
+```
+
+```{r}
+summary(experiment_1C_mother_model)
+```
+
+# Experiment 2A
+
+```{r}
+experiment_2A_child_model <- lmer(entropy ~ age + (1 + age|family),
+                                  data=filter(experiment_2A, speaker == "Target_Child"))
+experiment_2A_mother_model <- lmer(entropy ~ age + (1 + age|family),
+                                  data=filter(experiment_2A, speaker == "Mother"))
+```
+
+
+```{r}
+summary(experiment_2A_child_model)
+```
+
+```{r}
+summary(experiment_2A_mother_model)
+```
+
+
+# Experiment 2A
+
+```{r}
+experiment_2B_child_model <- lmer(entropy ~ age + (1 + age|family),
+                                  data=filter(experiment_2B, speaker == "Target_Child"))
+experiment_2B_mother_model <- lmer(entropy ~ age + (1 + age|family),
+                                  data=filter(experiment_2B, speaker == "Mother"))
+```
+
+
+```{r}
+summary(experiment_2B_child_model)
+```
+
+```{r}
+summary(experiment_2B_mother_model)
+```
+

@@ -1,10 +1,19 @@
-# EntropyBasedCLDMetrics
-Github repository accompanying the paper "Measuring language development from child-centered recordings".
+# Measuring language development from child-centered recordings
+
+Github repository accompanying the paper "Measuring language development from child-centered recordings":
+
+---
+
+**Abstract**
+
+_Standard ways to measure child language development from spontaneous corpora rely on detailed linguistic descrip- tions of a language as well as exhaustive transcriptions of the child’s speech, which today can only be done through costly human labor. We tackle both issues by proposing (1) a new language development metric (based on entropy) that does not require linguistic knowledge other than having a corpus of text in the language in question to train a language model, (2) a method to derive this metric directly from speech based on a smaller text-speech parallel corpus. Here, we present descrip- tive results on an open archive including data from six English- learning children as a proof of concept. We document that our entropy metric documents a gradual convergence of children’s speech towards adults’ speech as a function of age, and it also correlates moderately with lexical and morphosyntactic mea- sures derived from morphologically-parsed transcriptions._
+
+----
+
+**Repository organization**
 
 - `checkpoints/` contains all the trained model (`.pt` for pytorch models and `.arpa` for [KenLM](https://github.com/kpu/kenlm) language models)
-- `data/` contains all the raw data used in the different experiments.
 - `configs/` contains all the necessary options to train/test the models.
-- `results/` contains all the csvs storing the results.
 - `src/` contains all the source code.
 
 For reproducing all the experiments, you will need to:
@@ -250,4 +259,10 @@ This will create a csv file named `TLibrispeech_100h_Librispeech360_en_analysis.
 ## Plottings
 
 You can reproduce the figures of the paper with this `.Rmd` script: `analysis/plots.Rmd`
+
+## Models
+
+You can reproduce the mixed linear models of the paper with this `.Rmd` script: `analysis/models.Rmd`
+
+## Correlations
 
