@@ -3,6 +3,7 @@ utterances: data/Librispeech/model_inputs/librispeech.sorted # path to file cont
 h5_data: data/Librispeech/model_inputs/librispeech.hdf5 # path to the h5py data (this file has '.h5py' as extension)
 targets: data/Librispeech/model_inputs/librispeech.entropies # path to the file storing the targets for training (this file has '.entropies' as extension)
 sub_hours: null
+sub_hours: null # The number of hours to use for training is null, becuase all the data has been yaken fro training already
 batch_size: 32
 epochs: 5
 learning_rate: 0.00056
