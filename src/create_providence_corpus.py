@@ -58,13 +58,14 @@ def create_folders(groups: DataFrameGroupBy, output_folder: Path, cha_folder: Pa
 def main():
     parser = ArgumentParser()
     parser.add_argument("-i", "--input_csv", help="CSV file containing all the files.")
-    parser.add_argument("-c", "--cha_folder", help="Folder containing the cha files.")
+    parser.add_argument("-c", "--childes_corpus", help="Folder containing the cha files.")
     parser.add_argument("-o", "--output_folder", help="CSV file containing all the files.")
 
     args = parser.parse_args()
     dataframe = pd.read_csv(args.input_csv, low_memory=False)
     dataframe = dataframe.groupby(["raw_filename", "speaker_role"])
-    create_folders(dataframe, Path(args.output_folder), Path(args.cha_folder) / "annotations" / "cha" / "raw")
+    create_folders(dataframe, Path(args.output_folder),
+                   Path(args.childes_corpus) / "annotations" / "cha" / "raw")
 
 if __name__ == "__main__":
     main()

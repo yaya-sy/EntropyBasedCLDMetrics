@@ -74,8 +74,11 @@ make -j 4
 Once installed in the current directory, you can run the training:
 
 ```shell
+mkdir checkpoints
 kenlm/build/bin/lmplz --discount_fallback -o 5 < data/ngram_lm/librispeech.phonemized > checkpoints/librispeech_360.arpa
 ```
+
+The trained model will be stored in the `checkpoints` folder.
 
 ## Pepare the data for Thomas regression model (Experiment 2A)
 
@@ -147,7 +150,7 @@ The `filename.txt` files contains the raw filename and `months.txt` contains the
 > python src/prepare_input_files.py -c data/Thomas/ -a [AUDIO_FOLDER] -m checkpoints/librispeech_360.arpa
 ```
 
-Where `<AUDIO_FOLDER>` is the path to the audio folder. In the case of Thomas childes data, the audio folder is `recordings/raw/`
+Where `[AUDIO_FOLDER]` is the path to the audio folder. In the case of Thomas childes data, the audio folder is `recordings/raw/`
 
 ## Pepare the data for Librispeech regression model (Experiment 2B)
 
@@ -158,7 +161,7 @@ Create the inputs for the regression model:
 > python src/prepare_input_files.py -c data/Librispeech/ -a [LIBRISPEECH_TRAIN-CLEAN-100_FOLDER] -m checkpoints/librispeech_360.arpa
 ```
 
-where `<LIBRISPEECH_TRAIN-CLEAN-100_FOLDER>` is the path to the folder containing the librispeech train-clean-100
+where `[LIBRISPEECH_TRAIN-CLEAN-100_FOLDER]` is the path to the folder containing the librispeech train-clean-100
 ## Prepare the Providence test data
 
 ### Prepare utterances
@@ -267,3 +270,20 @@ You can reproduce the mixed linear models of the paper with this `.Rmd` script: 
 
 ## Correlations
 
+We give the MLU, IPSyn and VOCD already computed on the Providence corpus. The CSV file is `chi.kideval.csv`.
+
+But before computing the correlations with the entropy metric, you will need to merge this CSV with the CSVs produced by the previous experiments.
+
+For the experiments 1A, 2A and 2B, you can prepare the CSVs for computing the correlations using this command:
+
+```bash
+python src/merge_metrics.py -i [CSV_FOR_ANALYSIS]
+```
+
+Where `[CSV_RESULTS_FOR_ANALYSIS]`is the path to CSV results already prepared for analysis.
+
+For the experiments 1B and 1C, you can prepare the CSVs for computing the correlations using this command:
+
+```bash
+python src/merge_metrics_hubert.py -i [CSV_FOR_ANALYSIS]
+```
