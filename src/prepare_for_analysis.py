@@ -29,7 +29,7 @@ def main():
     output_folder = Path("results")
     output_folder.mkdir(exist_ok=True, parents=True)
     output_filename = Path(args.input_csv).stem
-    results = get_df(args.input_csv, "../TextSpeechCLDM/data/providence/model_inputs/providence.infos")
+    results = get_df(args.input_csv, "data/Providence/model_inputs/Providence.infos")
     results.to_csv(output_folder / f"{output_filename}_analysis.csv")
 
 if __name__ == "__main__":
