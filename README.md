@@ -270,7 +270,7 @@ You can reproduce the mixed linear models of the paper with this `.Rmd` script: 
 
 ## Correlations
 
-We give the MLU, IPSyn and VOCD already computed on the Providence corpus. The CSV file is `chi.kideval.csv`.
+We give the MLU, IPSyn and VOCD already computed on the Providence corpus. The CSV file is `chi.kideval.prepared.csv`.
 
 But before computing the correlations with the entropy metric, you will need to merge this CSV with the CSVs produced by the previous experiments.
 
