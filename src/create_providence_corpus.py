@@ -1,3 +1,4 @@
+"""Module for creating hierarchical data organization of the providence corpus."""
 from pathlib import Path
 from argparse import ArgumentParser
 import string
@@ -9,6 +10,7 @@ import pylangacq
 PUNCTS = "".join(set(string.punctuation) - {"'"})
 
 def create_folders(groups: DataFrameGroupBy, output_folder: Path, cha_folder: Path) -> None:
+    """Creates the nested folders from the prepared Providence CSV file."""
     allowed_speakers = {"Mother", "Target_Child"}
     for group, data in tqdm(groups):
         cha_file, speaker = group

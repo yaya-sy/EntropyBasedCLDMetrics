@@ -1,5 +1,4 @@
-"""Module for creating hierarchical data organization of the thomas corpus"""
-
+"""Module for creating hierarchical data organization of the thomas corpus."""
 from utterances_cleaner_thomas import UtterancesCleaner
 from argparse import ArgumentParser
 from collections import defaultdict

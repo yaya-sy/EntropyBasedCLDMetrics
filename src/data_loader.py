@@ -1,5 +1,4 @@
-"""This module contains script for loading the data for the model."""
-
+"""This module implements a dataloader for the model."""
 from typing import Union, Iterator, Tuple, List, Optional
 from pathlib import Path
 from itertools import islice, chain
@@ -27,17 +26,14 @@ random.seed(1797)
 
 class DataLoader:
     """
-    A dataloader that take as input a file containing\
-    for each line a key indexing to a spoken utterance.
-    This file is sorted by utterances length for the purpose\
-    of efficient batching (avoiding many paddings).
+    A dataloder for the entropies predictor model.
 
     Parameters
     ----------
     - h5_file:
-        Path to the h5py file (numpy arrays audios.)
+        Path to the h5py file (numpy arrays of the audios).
     - utterances: str, Path
-        Path to the file storing the utterance's keys.
+        Path to the file storing the utterances keys.
     - targets: str, Path.
         Path to the file containing targets (entropies) for each utterance.
     - checkpoint: str

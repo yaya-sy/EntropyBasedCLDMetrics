@@ -8,7 +8,7 @@ def prepare(childes_folder: Path, output_folder: Path):
     Prepares the input files for a given childes corpus.
     It will create the utterances file, their audio paths\
     and the informations (i.e: for each utterance, who speaks\
-    and what age.)
+    and at which age).
     """
     output_filename = childes_folder.stem
     children = list(childes_folder.glob("cleaned/*/"))
@@ -40,8 +40,8 @@ def prepare(childes_folder: Path, output_folder: Path):
                 # Important logic here:
                 # a) For training (thomas), we necessary need transcription (entropy) and speech pairs.
                 # So we have to keep only utterances for which we have transcription AND speech.
-                # b) For testing (providence), we may have speech without transcription (incomprehensible speech).
-                # In this case, we will keep the speech for predicting the entropy even if this speech is not transcribed.
+                # b) For testing (providence), we may have speech without transcription (e.g, ininterpretable speech produced by the child).
+                # In this case, we will keep the speech for predicting the entropy using the model even if this speech is not transcribed.
                 if not orthographic and childes_folder.stem == "Thomas":
                     continue
                 path = f"{child_name}/{filename}" if len(children) > 1 else filename

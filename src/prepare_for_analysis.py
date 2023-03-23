@@ -1,4 +1,5 @@
-"""Module for preapring the csv file for statistcal analysis and visualization."""
+"""Module for preparing the CSVs results (expect HuBERT experiments)\
+    for plotting and modelling."""
 from argparse import ArgumentParser
 from pathlib import Path
 import pandas as pd

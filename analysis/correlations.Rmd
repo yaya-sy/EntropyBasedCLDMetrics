@@ -1,0 +1,71 @@
+---
+title: "correlations"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r, include=FALSE}
+library(ggplot2)
+library(dplyr)
+# library(tidyverse)
+library(lme4)
+library(svglite)
+```
+
+```{r}
+experiment_1A <- read.csv("../results/Metrics_Librispeech_360h_analysis.csv")
+experiment_1B <- read.csv("../results/Metrics_HuBERT-nat_entropy_ngram-2-merge-False_mmap_analysis.csv")
+experiment_1C <- read.csv("../results/Metrics_HuBERT-tts_entropy_ngram-2-merge-False_mmap_analysis.csv")
+experiment_2A <- read.csv("../results/Metrics_Thomas_30h_Librispeech_en_analysis.csv")
+experiment_2B <- read.csv("../results/Metrics_Librispeech_100h_Librispeech360_en_analysis.csv")
+```
+
+# MLU
+
+## Exp. 1A
+
+```{r}
+ggscatter(experiment_1A, x = "MLU_Morphemes", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1A)")
+```
+### Exp. 1B
+
+```{r}
+ggscatter(experiment_1B, x = "MLU_Morphemes", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1A)")
+```
+
+### Exp. 1C
+
+```{r}
+library("ggpubr")
+ggscatter(hubert_tts, x = "MLU_Morphemes", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1A)")
+```
+
+### Exp. 2A
+
+```{r}
+ggscatter(metrics_ethan_LBSPCH, x = "MLU_Morphemes", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 2A)")
+```
+### Exp. 2B
+
+```{r}
+ggscatter(metrics_LBSPCH, x = "MLU_Morphemes", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 2B)")
+```
+

@@ -2,6 +2,9 @@
 *.sh
 *.hdf5
 *.epochs
+checkpoints/
+data/
+results/
 src/create_providence_corpus_old.py
 launchers.txt
 estimated/

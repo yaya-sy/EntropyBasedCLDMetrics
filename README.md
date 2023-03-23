@@ -215,6 +215,22 @@ python src/prepare_for_analysis.py -i results/Librispeech_360h.csv
 
 This will create a csv file named `Librispeech_360h_analysis.csv` in the folder `results`.
 
+### Experiment 1B
+
+```bash
+python src/prepare_for_analysis_hubert.py -i results/HuBERT-nat_entropy_ngram-2-merge-False_mmap.csv -c [CHILDES_PATH_PROVIDENCE]
+```
+
+This will create a csv file named `HuBERT-nat_entropy_ngram-2-merge-False_mmap_analysis.csv` in the folder `results`.
+
+### Experiment 1C
+
+```bash
+python src/prepare_for_analysis_hubert.py -i results/HuBERT-tts_entropy_ngram-2-merge-False_mmap.csv -c [CHILDES_PATH_PROVIDENCE]
+```
+
+This will create a csv file named `HuBERT-tts_entropy_ngram-2-merge-False_mmap_analysis.csv` in the folder `results`.
+
 ### Experiment 2A
 
 ```bash
@@ -229,7 +245,7 @@ This will create a csv file named `Thomas_30h_Librispeech_en_analysis.csv` in th
 python src/prepare_for_analysis.py -i results/Librispeech_100h_Librispeech360_en.csv
 ```
 
-This will create a csv file named `TLibrispeech_100h_Librispeech360_en_analysis.csv` in the folder `results`.
+This will create a csv file named `Librispeech_100h_Librispeech360_en_analysis.csv` in the folder `results`.
 
 ## Plottings
 

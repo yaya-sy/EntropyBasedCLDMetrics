@@ -1,5 +1,4 @@
-"""Use the model trained on top of Whisper features\
-    for computing entropy on spoken utterances."""
+"""Use the trained model for computing entropies on spoken utterances."""
 
 from model import EntropyWhisper
 from data_loader import DataLoader

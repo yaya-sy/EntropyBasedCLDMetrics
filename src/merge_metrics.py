@@ -1,3 +1,4 @@
+"""Module that merge the results CSVs with the standard child development metrics."""
 from argparse import ArgumentParser
 from pathlib import Path
 import pandas as pd

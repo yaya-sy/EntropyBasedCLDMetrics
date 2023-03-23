@@ -1,3 +1,4 @@
+"""A basic trainer for the entropy predictor model."""
 from data_loader import DataLoader
 from model import EntropyWhisper
 from pathlib import Path
@@ -22,7 +23,7 @@ def train(model: EntropyWhisper,
           batch_size: int=32,
           epochs=5,
           lr: int=0.00056) -> None:
-    """Trainer for """
+    """Train the model to predict text entropies from spoken utterances."""
     output_path.mkdir(exist_ok=True, parents=True)
     mse = torch.nn.MSELoss(reduction="mean")
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
@@ -34,17 +35,12 @@ def train(model: EntropyWhisper,
         bar = tqdm(total=data_loader.sample_size)
         epoch_losses = 0
         for x, y, _ in data_iterator:
-            # reinitialize gradients to zeros
             model.zero_grad()
             x = x.to(device)
             y = y.to(device)
-            # predict the entropy of the spoken utterance
             predicted_entropy = model(x)
-            # compute the mean squared error of the predicted and target entropies
             loss = mse(predicted_entropy.squeeze(-1), y)
-            # compute the derivatives of the loss function in respect to the parameters of the model
             loss.backward()
-            # update the parameters of the model
             optimizer.step()
 
             epoch_losses += loss.item()

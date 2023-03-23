@@ -1,5 +1,4 @@
-"""Use the model trained ngram language models\
-    to compute the entropies on Providence data."""
+"""Module for preparing csv containing the entropies from ngram language model."""
 from pathlib import Path
 from pandas import DataFrame
 from math import exp

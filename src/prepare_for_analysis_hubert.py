@@ -1,11 +1,65 @@
+"""Module for preparing the HuBERT CSVs results for plotting and modelling."""
+from tqdm import tqdm
+from pathlib import Path
+from argparse import ArgumentParser
+import pandas as pd
+import pylangacq
 
-# hubert_nat = pd.read_csv("results/HuBERT-nat_entropy_ngram-2-merge-False_mmap.csv")
-# hubert_tts = pd.read_csv("results/HuBERT-tts_entropy_ngram-2-merge-False_mmap.csv")
+def get_args():
+    parser = ArgumentParser()
+    parser.add_argument("-i", "--input_csv",
+                        help="The csv results of the HuBERT experience.")
+    parser.add_argument("-c", "--childes_providence",
+                        help="Path to childes providence corpus.")
+    
+    return parser.parse_args()
 
-# hubert_nat.loc[(hubert_nat["segment_speaker"] == "CHI"), "segment_speaker"] = "Target_Child"
-# hubert_nat.loc[(hubert_nat["segment_speaker"] == "FEM"), "segment_speaker"] = "Mother"
-# hubert_tts.loc[(hubert_tts["segment_speaker"] == "CHI"), "segment_speaker"] = "Target_Child"
-# hubert_tts.loc[(hubert_tts["segment_speaker"] == "FEM"), "segment_speaker"] = "Mother"
+def age_and_families_columns(results, childes_folder):
+    """Creates the column age and family in the CSV."""
+    ages = []
+    families = []
+
+    results_groups = results.sort_values(by=['file_name'])
+    results_groups = results.groupby("file_name").groups
+    for group in tqdm(results_groups):
+        filename = Path(group)
+        if "-" in filename.stem:
+            child, filename = str(Path(filename).stem).split("-")
+        else:
+            child, filename = filename.parent.stem, filename.stem
+        filename += ".cha"
+        filename = childes_folder / child / filename
+        cha = pylangacq.read_chat(str(filename))
+        age = cha.ages(months=True)[0]
+        if age == 0.0:
+            continue
+        ages.extend([age] * len(results_groups[group]))
+        families.extend([child] * len(results_groups[group]))
+    results["age"] = ages
+    results["family"] = families
+    return results
+
+
+def main():
+    args = get_args()
+    hubert_results = pd.read_csv(args.input_csv)
+
+    hubert_results.loc[(hubert_results["segment_speaker"] == "CHI"), "segment_speaker"] = "Target_Child"
+    hubert_results.loc[(hubert_results["segment_speaker"] == "FEM"), "segment_speaker"] = "Mother"
+
+    results = age_and_families_columns(hubert_results,
+                                       Path(args.childes_providence) / "annotations" / "cha" / "raw")
+
+    results = results.rename(columns={"segment_speaker": "speaker"})
+    results = results[results['speaker'].map(lambda x: x in {"Mother", "Target_Child"})]
+    results = results.groupby(["family", "speaker", "age"]).mean()
+    results.drop("Unnamed: 0", axis=1, inplace=True)
+
+    output_filename = Path(args.input_csv).stem
+    results.to_csv(f"results/{output_filename}_analysis.csv")
+
+if __name__ == "__main__":
+    main()
 
 # hubert_nat_ages = []
 # hubert_tts_ages = []

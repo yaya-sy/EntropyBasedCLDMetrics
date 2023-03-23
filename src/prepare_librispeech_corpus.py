@@ -1,3 +1,5 @@
+"""Module for preparing the Librispeech data for training\
+    the model that predict entropy from speech"""
 from pathlib import Path
 from argparse import ArgumentParser
 import re

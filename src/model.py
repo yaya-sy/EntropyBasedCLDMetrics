@@ -1,4 +1,4 @@
-"""Module that implement a model for predicting text entropies from whisper features."""
+"""Module that implement a model that predict text entropies from whisper features."""
 from math import sqrt
 import random
 import torch

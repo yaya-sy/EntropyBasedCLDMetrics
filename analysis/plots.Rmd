@@ -8,6 +8,14 @@ editor_options:
 ---
 
 ```{r, include=FALSE}
+install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("tidyverse")
+install.packages("lme4")
+install.packages("svglite")
+```
+
+```{r, include=FALSE}
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
@@ -17,8 +25,8 @@ library(svglite)
 
 ```{r}
 experiment_1A <- read.csv("../results/Librispeech_360h_analysis.csv")
-experiment_1B <- read.csv("../results/HuBERT_nat.csv")
-experiment_1C <- read.csv("../results/HuBERT_tts.csv")
+experiment_1B <- read.csv("../results/HuBERT-nat_entropy_ngram-2-merge-False_mmap_analysis.csv")
+experiment_1C <- read.csv("../results/HuBERT-tts_entropy_ngram-2-merge-False_mmap_analysis.csv")
 experiment_2A <- read.csv("../results/Thomas_30h_Librispeech_en_analysis.csv")
 ```
 
