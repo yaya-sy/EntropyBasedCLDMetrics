@@ -23,6 +23,12 @@ For reproducing all the experiments, you will need to:
 3) Run the testing
 4) Reproduce the anlaysis (plots and statistical analysis of the results)
 
+# Corpus
+
+Librispeech : https://www.openslr.org/12
+Thomas : https://gin.g-node.org/LAAC-LSCP/thomas
+Providence: https://gin.g-node.org/LAAC-LSCP/providence
+
 # Working environment
 
 Clone this github repos and move to it:
