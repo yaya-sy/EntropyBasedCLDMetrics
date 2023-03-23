@@ -92,56 +92,11 @@ Once installed, you can run this command to extract utterances, their cleaned ve
 python src/create_thomas_corpus.py -c [CHILDES_PATH_THOMAS] -o data/Thomas
 ```
 
-Where `<CHILDES_PATH_THOMAS>` is the path to the installed Thomas data.
- 
-This will create a hierarchical folder in the folder `data`:
+Where `[CHILDES_PATH_THOMAS]` is the path to the installed Thomas data.
 
-```
-Thomas\
-    cleaned\
-        child_1\
-            age_1\
-                filename.txt
-                months.txt
-                Mother.cleaned
-                Target_Child.cleaned
-            age_2\
-            ...
-            age_n
-        child_2
-        ...
-        child_n
-    orthographic\
-        child_1\
-            age_1\
-                filename.txt
-                months.txt
-                Mother.orthographic
-                Target_Child.orthographic
-            age_2\
-            ...
-            age_n
-        child_2\
-        ...
-        child_n\
-    timemarks\
-        child_1\
-            age_1\
-                filename.txt
-                months.txt
-                Mother.timemarks
-                Target_Child.timemarks
-            age_2\
-            ...
-            age_n
-        child_2\
-        ...
-        child_n\
-```
+In the created folder, `orthographic` contains the raw annotations without cleaning. The `cleaned` folder contains the cleaned version of the annotations. And `timemarks` contains the onsets and offsets of each utterance in the audio. All of these are aligned, meaning that the _i<sup>th</sup>_ line of each file corresponds to the _i<sup>th</sup>_ line of the other files.
 
-Where `orthographic` contains the raw annotations without cleaning. The `cleaned` contains the cleaned version of the annotations. And `timemarks` contains the onsets and offsets of each utterance in the audio. All of these are aligned, meaning that the _i<sup>th</sup>_ line of each file corresponds to the _i<sup>th</sup>_ line of the other files.
-
-The `filename.txt` files contains the raw filename and `months.txt` contains the age in months.
+The `filename.txt` files contains the raw filename and `months.txt` contains the age of the child in months.
 
 ### Prepare inputs for the regression model
 
@@ -161,7 +116,8 @@ Create the inputs for the regression model:
 > python src/prepare_input_files.py -c data/Librispeech/ -a [LIBRISPEECH_TRAIN-CLEAN-100_FOLDER] -m checkpoints/librispeech_360.arpa
 ```
 
-where `[LIBRISPEECH_TRAIN-CLEAN-100_FOLDER]` is the path to the folder containing the librispeech train-clean-100
+Where `[LIBRISPEECH_TRAIN-CLEAN-100_FOLDER]` is the path to the folder containing the librispeech train-clean-100
+
 ## Prepare the Providence test data
 
 ### Prepare utterances
@@ -181,7 +137,7 @@ Create the inputs for the model:
 > python src/prepare_input_files.py -c data/Providence/ -a [AUDIO_FOLDER] -m checkpoints/librispeech_360.arpa
 ```
 
-Where `<AUDIO_FOLDER>` is the path to the audio folder. In the case of Providence childes data, the audio folder is `recordings/raw/`
+Where `[AUDIO_FOLDER]` is the path to the audio folder. In the case of Providence childes data, the audio folder is `recordings/raw/`
 
 # Run the trainings
 
@@ -198,6 +154,8 @@ Run the regression model training on Thomas (Experiment 2A):
 python src/train.py -c configs/thomas.yaml
 ```
 
+The trained model will be stored in the folder `checkpoints` as `Thomas_30h_Librispeech360_en.pt`.
+
 ## Experiment 2B: Training on Librispeech
 
 Run the regression model training on librispeech-100 (Experiment 2B):
@@ -205,6 +163,8 @@ Run the regression model training on librispeech-100 (Experiment 2B):
 ```bash
 python src/train.py -c configs/librispeech.yaml
 ```
+
+The trained model will be stored in the folder `checkpoints` as `Librispeech_100h_Librispeech360_en.pt`.
 
 # Run the testing
 
@@ -264,7 +224,7 @@ This will create a csv file named `TLibrispeech_100h_Librispeech360_en_analysis.
 
 You can reproduce the figures of the paper with this `.Rmd` script: `analysis/plots.Rmd`
 
-## Models
+## Mixed Linear Models
 
 You can reproduce the mixed linear models of the paper with this `.Rmd` script: `analysis/models.Rmd`
 
@@ -272,7 +232,7 @@ You can reproduce the mixed linear models of the paper with this `.Rmd` script: 
 
 We give the MLU, IPSyn and VOCD already computed on the Providence corpus. The CSV file is `chi.kideval.prepared.csv`.
 
-But before computing the correlations with the entropy metric, you will need to merge this CSV with the CSVs produced by the previous experiments.
+But before computing the correlations with the entropy metric, you will need to merge `chi.kideval.prepared.csv` with the CSVs produced in the previous experiments.
 
 For the experiments 1A, 2A and 2B, you can prepare the CSVs for computing the correlations using this command:
 
