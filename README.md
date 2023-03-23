@@ -23,6 +23,11 @@ For reproducing all the experiments, you will need to:
 3) Run the testing
 4) Reproduce the anlaysis (plots and statistical analysis of the results)
 
+# Corpus
+Librispeech : https://www.openslr.org/12
+<br/>Thomas : https://gin.g-node.org/LAAC-LSCP/thomas
+<br/>Providence: https://gin.g-node.org/LAAC-LSCP/providence
+
 # Working environment
 
 Clone this github repos and move to it:
@@ -84,7 +89,13 @@ The trained model will be stored in the `checkpoints` folder.
 
 ### Prepare utterances
 
-You will need to install the Thomas corpus as imported by William N. Havard: https://gin.g-node.org/LAAC-LSCP/thomas
+You will need to install the Thomas & Providence corpus as imported by William N. Havard: https://gin.g-node.org/LAAC-LSCP/thomas & https://gin.g-node.org/LAAC-LSCP/providence
+
+To install using datalad run the following commands:
+```shell
+datalad install -r [LINK_TO_DATASET]
+datalad get -d [PATH_TO_DATASET]
+```
 
 Once installed, you can run this command to extract utterances, their cleaned version and the timemarks:
 
