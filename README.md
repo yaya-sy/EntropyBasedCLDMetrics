@@ -84,7 +84,13 @@ The trained model will be stored in the `checkpoints` folder.
 
 ### Prepare utterances
 
-You will need to install the Thomas corpus as imported by William N. Havard: https://gin.g-node.org/LAAC-LSCP/thomas
+You will need to install the Thomas & Providence corpus as imported by William N. Havard: https://gin.g-node.org/LAAC-LSCP/thomas & https://gin.g-node.org/LAAC-LSCP/providence
+
+To install using datalad run the following commands:
+```shell
+datalad install -r [LINK_TO_DATASET]
+datalad get -d [PATH_TO_DATASET]
+```
 
 Once installed, you can run this command to extract utterances, their cleaned version and the timemarks:
 
