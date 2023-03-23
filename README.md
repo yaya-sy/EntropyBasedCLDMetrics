@@ -24,10 +24,9 @@ For reproducing all the experiments, you will need to:
 4) Reproduce the anlaysis (plots and statistical analysis of the results)
 
 # Corpus
-
-Librispeech : https://www.openslr.org/12
-Thomas : https://gin.g-node.org/LAAC-LSCP/thomas
-Providence: https://gin.g-node.org/LAAC-LSCP/providence
+<br/>Librispeech : https://www.openslr.org/12
+<br/>Thomas : https://gin.g-node.org/LAAC-LSCP/thomas
+<br/>Providence: https://gin.g-node.org/LAAC-LSCP/providence
 
 # Working environment
 
