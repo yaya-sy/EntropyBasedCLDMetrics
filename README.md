@@ -107,11 +107,11 @@ Once installed, you can run this command to extract utterances, their cleaned ve
 python src/create_thomas_corpus.py -c [PATH_TO_THOMAS_CORPUS] -o data/Thomas
 ```
 
-Where `[PATH_TO_THOMAS_CORPUS]` is the path to the installed Thomas data.
+Where `[PATH_TO_THOMAS_CORPUS]` is the path to the installed Thomas corpus.
 
-In the created folder, `orthographic` contains the raw annotations without cleaning. The `cleaned` folder contains the cleaned version of the annotations. And `timemarks` contains the onsets and offsets of each utterance in the audio. All of these are aligned, meaning that the _i<sup>th</sup>_ line of each file corresponds to the _i<sup>th</sup>_ line of the other files.
+In the created folder, `orthographic` contains the raw annotations without cleaning. The `cleaned` folder contains the cleaned version of the annotations. And `timemarks` contains the onsets and offsets of each utterance in the audios. All of these are aligned, meaning that the _i<sup>th</sup>_ line of each file corresponds to the _i<sup>th</sup>_ line of the other files.
 
-The `filename.txt` files contains the raw filename and `months.txt` contains the age of the child in months.
+The `filename.txt` files contain the raw filenames and `months.txt` files contain the ages of the child in months.
 
 ### Prepare inputs for the regression model
 
@@ -135,7 +135,7 @@ Where `[LIBRISPEECH_TRAIN-CLEAN-100_FOLDER]` is the path to the folder containin
 
 ## Prepare the Providence test data
 
-As for Thomas corpus, you will also need to install the providence corpus https://gin.g-node.org/LAAC-LSCP/providence.
+As for the Thomas corpus, you will also need to install the providence corpus https://gin.g-node.org/LAAC-LSCP/providence.
 
 ### Prepare utterances
 
@@ -160,12 +160,12 @@ Where `[AUDIO_FOLDER]` is the path to the audio folder of the data installed fro
 
 # Run the trainings
 
-## Experiment 1A: Training on Librispeech-360
+## Experiment 1A: _n_-gram language model training on Librispeech train-clean-360
 
 The model is already trained during the data prepration and is saved on `checkpoints/librispeech_360.arpa`.
 So we will not retrain it again.
 
-## Experiment 2A: Training on Thomas
+## Experiment 2A: Entropy predictions training on Thomas
 
 Run the regression model training on Thomas:
 
@@ -175,9 +175,9 @@ python src/train.py -c configs/thomas.yaml
 
 The trained model will be stored in the folder `checkpoints` as `Thomas_30h_Librispeech360_en.pt`.
 
-## Experiment 2B: Training on Librispeech
+## Experiment 2B: Entropy predictions training on Librispeech train-clean-100
 
-Run the regression model training on librispeech-100:
+Run the regression model training on librispeech train-clean-100:
 
 ```bash
 python src/train.py -c configs/librispeech.yaml
