@@ -14,7 +14,8 @@ _Standard ways to measure child language development from spontaneous corpora re
 
 - `checkpoints/` contains all the trained model (`.pt` for pytorch models and `.arpa` for [KenLM](https://github.com/kpu/kenlm) language models)
 - `configs/` contains all the necessary options to train/test the models.
-- `src/` contains all the source code.
+- `src/` contains all the python source code.
+- `analysis/` contains all the R notebook for analysing the results.
 
 For reproducing all the experiments, you will need to:
 
