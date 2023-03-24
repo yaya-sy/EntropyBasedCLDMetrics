@@ -1,5 +1,4 @@
 """Use the trained model for computing entropies on spoken utterances."""
-
 from model import EntropyWhisper
 from data_loader import DataLoader
 from typing import List, Optional

@@ -1,7 +1,7 @@
 """Module for preparing csv containing the entropies from ngram language model."""
 from pathlib import Path
-from pandas import DataFrame
 from math import exp
+from pandas import DataFrame
 
 def get_entropies(entropies_file: str) -> dict:
     """Reads the entopies of utterances into dictionary."""
