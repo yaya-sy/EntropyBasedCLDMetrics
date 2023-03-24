@@ -1,6 +1,6 @@
 # Measuring language development from child-centered recordings
 
-Github repository accompanying the paper "Measuring language development from child-centered recordings":
+Github repository accompanying the paper "Measuring language development from child-centered recordings".
 
 ---
 
@@ -30,7 +30,7 @@ Librispeech : https://www.openslr.org/12
 
 # Working environment
 
-Clone this github repos and move to it:
+Clone this github repository and move to it:
 
 ```bash
 git clone https://github.com/yaya-sy/EntropyBasedCLDMetrics.git
@@ -53,15 +53,17 @@ conda activate ent_cldm
 
 ## Prepare the librispeech data for phones _n_-gram language model
 
-The phonemizer requires the espeak backend, it can be installed with: `apt-get install espeak-ng`
+The phonemizer requires the espeak backend, it can be installed with this command line: `apt-get install espeak-ng`
 
 ```shell
 python src/librispeech_for_ngram_lm.py -i [LIBRISPEECH_TRAIN-CLEAN-360_FOLDER] -o data/ngram_lm/
 ```
 
+This will create two files in `data/ngram_lm`. The one with the `*.orthographic` extension contains the orthographic utterances and the one with `*.phonemized` extension contains the phonemized utterances.
+
 ## _n_-gram language model training
 
-We need to first train the _n_-gram language model in order to prepare the data for the other experiments.
+We need first to train the _n_-gram language model in order to prepare the data for the other experiments.
 
 For training the _n_-gram language model, you will need to install [KenLM](https://github.com/kpu/kenlm):
 
@@ -89,21 +91,23 @@ The trained model will be stored in the `checkpoints` folder.
 
 ### Prepare utterances
 
-You will need to install the Thomas & Providence corpus as imported by William N. Havard: https://gin.g-node.org/LAAC-LSCP/thomas & https://gin.g-node.org/LAAC-LSCP/providence
+You will need to install the Thomas corpus https://gin.g-node.org/LAAC-LSCP/thomas.
 
-To install using datalad run the following commands:
+To install the thomas corpus using datalad, run the following commands:
 ```shell
-datalad install -r [LINK_TO_DATASET]
-datalad get -d [PATH_TO_DATASET]
+datalad install -r git@gin.g-node.org:/LAAC-LSCP/thomas.git
+cd thomas
+datalad get annotations/cha/*
+datalad get recordings/raw/*
 ```
 
 Once installed, you can run this command to extract utterances, their cleaned version and the timemarks:
 
 ```shell
-python src/create_thomas_corpus.py -c [CHILDES_PATH_THOMAS] -o data/Thomas
+python src/create_thomas_corpus.py -c [PATH_TO_THOMAS_CORPUS] -o data/Thomas
 ```
 
-Where `[CHILDES_PATH_THOMAS]` is the path to the installed Thomas data.
+Where `[PATH_TO_THOMAS_CORPUS]` is the path to the installed Thomas data.
 
 In the created folder, `orthographic` contains the raw annotations without cleaning. The `cleaned` folder contains the cleaned version of the annotations. And `timemarks` contains the onsets and offsets of each utterance in the audio. All of these are aligned, meaning that the _i<sup>th</sup>_ line of each file corresponds to the _i<sup>th</sup>_ line of the other files.
 
@@ -116,7 +120,7 @@ The `filename.txt` files contains the raw filename and `months.txt` contains the
 > python src/prepare_input_files.py -c data/Thomas/ -a [AUDIO_FOLDER] -m checkpoints/librispeech_360.arpa
 ```
 
-Where `[AUDIO_FOLDER]` is the path to the audio folder. In the case of Thomas childes data, the audio folder is `recordings/raw/`
+Where `[AUDIO_FOLDER]` is the path to the audio folder of the data installed from the GIN repository. The audio folder is `recordings/raw/`.
 
 ## Pepare the data for Librispeech regression model (Experiment 2B)
 
@@ -127,17 +131,21 @@ Create the inputs for the regression model:
 > python src/prepare_input_files.py -c data/Librispeech/ -a [LIBRISPEECH_TRAIN-CLEAN-100_FOLDER] -m checkpoints/librispeech_360.arpa
 ```
 
-Where `[LIBRISPEECH_TRAIN-CLEAN-100_FOLDER]` is the path to the folder containing the librispeech train-clean-100
+Where `[LIBRISPEECH_TRAIN-CLEAN-100_FOLDER]` is the path to the folder containing the librispeech train-clean-100.
 
 ## Prepare the Providence test data
 
+As for Thomas corpus, you will also need to install the providence corpus https://gin.g-node.org/LAAC-LSCP/providence.
+
 ### Prepare utterances
 
-Create the hierarchical data organization for Providence:
+Extract the utterances of the providence corpus:
 
 ```bash
-python src/create_providence_corpus_new.py -i [PREPARED_CSV] -c [CHILDES_PATH_PROVIDENCE] -o data/Providence/
+python src/create_providence_corpus_new.py -i [PREPARED_CSV] -c [PATH_TO_PROVIDENCE_CORPUS] -o data/Providence/
 ```
+
+Where [PREPARED_CSV] is the CSV aleady prepared with cleaned utterances, the timemarks, etc.
 
 ### Prepare inputs for the regression model
 
@@ -148,18 +156,18 @@ Create the inputs for the model:
 > python src/prepare_input_files.py -c data/Providence/ -a [AUDIO_FOLDER] -m checkpoints/librispeech_360.arpa
 ```
 
-Where `[AUDIO_FOLDER]` is the path to the audio folder. In the case of Providence childes data, the audio folder is `recordings/raw/`
+Where `[AUDIO_FOLDER]` is the path to the audio folder of the data installed from the GIN repository. The audio folder is `recordings/raw/`.
 
 # Run the trainings
 
 ## Experiment 1A: Training on Librispeech-360
 
-The model is already trained during the data prepration and is save on `checkpoints/librispeech_360.arpa`.
+The model is already trained during the data prepration and is saved on `checkpoints/librispeech_360.arpa`.
 So we will not retrain it again.
 
 ## Experiment 2A: Training on Thomas
 
-Run the regression model training on Thomas (Experiment 2A):
+Run the regression model training on Thomas:
 
 ```bash
 python src/train.py -c configs/thomas.yaml
@@ -169,7 +177,7 @@ The trained model will be stored in the folder `checkpoints` as `Thomas_30h_Libr
 
 ## Experiment 2B: Training on Librispeech
 
-Run the regression model training on librispeech-100 (Experiment 2B):
+Run the regression model training on librispeech-100:
 
 ```bash
 python src/train.py -c configs/librispeech.yaml
@@ -249,17 +257,17 @@ This will create a csv file named `Librispeech_100h_Librispeech360_en_analysis.c
 
 ## Plottings
 
-You can reproduce the figures of the paper with this `.Rmd` script: `analysis/plots.Rmd`
+You can reproduce the figures of the paper with this notebook: `analysis/plots.Rmd`
 
 ## Mixed Linear Models
 
-You can reproduce the mixed linear models of the paper with this `.Rmd` script: `analysis/models.Rmd`
+You can reproduce the mixed linear models of the paper with this notebook: `analysis/models.Rmd`
 
 ## Correlations
 
-We give the MLU, IPSyn and VOCD already computed on the Providence corpus. The CSV file is `chi.kideval.prepared.csv`.
+We give the MLU, IPSyn and VOCD already computed on the Providence corpus. The CSV file is in `extra/chi.kideval.csv`.
 
-But before computing the correlations with the entropy metric, you will need to merge `chi.kideval.prepared.csv` with the CSVs produced in the previous experiments.
+But before computing the correlations with the entropy metric, you will need to merge `chi.kideval.csv` with the CSVs produced in the previous experiments.
 
 For the experiments 1A, 2A and 2B, you can prepare the CSVs for computing the correlations using this command:
 
@@ -274,3 +282,5 @@ For the experiments 1B and 1C, you can prepare the CSVs for computing the correl
 ```bash
 python src/merge_metrics_hubert.py -i [CSV_FOR_ANALYSIS]
 ```
+
+Once done, you can use the notebook `analysis/correlations.Rmd` to compute correlations.
