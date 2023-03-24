@@ -10,7 +10,7 @@ def get_args():
     parser.add_argument("-i", "--csv_results",
                         help="The csv already prepared for analysis")
     parser.add_argument("-c", "--childes_providence",
-                        required=False,
+                        required=True,
                         help="Path to childes providence corpus.")
 
     return parser.parse_args()
@@ -40,13 +40,9 @@ def merge(metrics, results, output_filename):
 def main():
     args = get_args()
 
-    if args.childes_providence:
-        metrics_csv = pd.read_csv("extra/chi.kideval.csv", sep=";")
-        metrics_csv = metrics_csv.rename(columns={"Age(Month)": "age"})
-        metrics_csv = get_families(metrics_csv, Path(args.childes_providence) / "annotations" / "cha" / "raw")
-        metrics_csv.to_csv("extra/chi.kideval.prepared.csv")
-
-    metrics_csv = pd.read_csv("extra/chi.kideval.prepared.csv")
+    metrics_csv = pd.read_csv("extra/chi.kideval.csv", sep=";")
+    metrics_csv = metrics_csv.rename(columns={"Age(Month)": "age"})
+    metrics_csv = get_families(metrics_csv, Path(args.childes_providence) / "annotations" / "cha" / "raw")
 
     csv_results = pd.read_csv(args.csv_results)
     csv_results = csv_results.loc[csv_results["speaker"] == "Target_Child"]

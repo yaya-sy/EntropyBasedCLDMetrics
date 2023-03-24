@@ -10,7 +10,6 @@ editor_options:
 ```{r, include=FALSE}
 library(ggplot2)
 library(dplyr)
-# library(tidyverse)
 library(lme4)
 library(svglite)
 ```
@@ -33,39 +32,133 @@ ggscatter(experiment_1A, x = "MLU_Morphemes", y = "entropy",
           cor.coef = TRUE, cor.method = "spearman",
           xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1A)")
 ```
-### Exp. 1B
+
+## Exp. 1B
 
 ```{r}
 ggscatter(experiment_1B, x = "MLU_Morphemes", y = "entropy", 
           add = "reg.line", conf.int = TRUE, 
           cor.coef = TRUE, cor.method = "spearman",
-          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1A)")
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1B)")
 ```
 
-### Exp. 1C
+## Exp. 1C
 
 ```{r}
-library("ggpubr")
-ggscatter(hubert_tts, x = "MLU_Morphemes", y = "entropy", 
+ggscatter(experiment_1C, x = "MLU_Morphemes", y = "entropy", 
           add = "reg.line", conf.int = TRUE, 
           cor.coef = TRUE, cor.method = "spearman",
-          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1A)")
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1C)")
 ```
 
-### Exp. 2A
+## Exp. 2A
 
 ```{r}
-ggscatter(metrics_ethan_LBSPCH, x = "MLU_Morphemes", y = "entropy", 
+ggscatter(experiment_2A, x = "MLU_Morphemes", y = "entropy", 
           add = "reg.line", conf.int = TRUE, 
           cor.coef = TRUE, cor.method = "spearman",
           xlab = "MLU in morphemes", ylab = "Entropy (Exp. 2A)")
 ```
-### Exp. 2B
+## Exp. 2B
 
 ```{r}
-ggscatter(metrics_LBSPCH, x = "MLU_Morphemes", y = "entropy", 
+ggscatter(experiment_2B, x = "MLU_Morphemes", y = "entropy", 
           add = "reg.line", conf.int = TRUE, 
           cor.coef = TRUE, cor.method = "spearman",
           xlab = "MLU in morphemes", ylab = "Entropy (Exp. 2B)")
 ```
 
+# Lexical diversity
+
+## Exp. 1A
+
+```{r}
+ggscatter(experiment_1A, x = "VOCD_D_optimum_average", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1A)")
+```
+
+## Exp. 1B
+
+```{r}
+ggscatter(experiment_1B, x = "VOCD_D_optimum_average", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1B)")
+```
+
+## Exp. 1C
+
+```{r}
+ggscatter(experiment_1C, x = "VOCD_D_optimum_average", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1C)")
+```
+
+## Exp. 2A
+
+```{r}
+ggscatter(experiment_2A, x = "VOCD_D_optimum_average", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 2A)")
+```
+
+## Exp. 2B
+
+```{r}
+ggscatter(experiment_2B, x = "VOCD_D_optimum_average", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 2B)")
+```
+
+
+# Syntactic
+
+## Exp. 1A
+
+```{r}
+ggscatter(experiment_1A, x = "IPSyn_Total", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1A)")
+```
+
+## Exp. 1B
+
+```{r}
+ggscatter(experiment_1B, x = "IPSyn_Total", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1B)")
+```
+
+## Exp. 1C
+
+```{r}
+ggscatter(experiment_1C, x = "IPSyn_Total", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 1C)")
+```
+
+## Exp. 2A
+
+```{r}
+ggscatter(experiment_2A, x = "IPSyn_Total", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 2A)")
+```
+
+## Exp. 2B
+
+```{r}
+ggscatter(experiment_2B, x = "IPSyn_Total", y = "entropy", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "spearman",
+          xlab = "MLU in morphemes", ylab = "Entropy (Exp. 2B)")
+```
