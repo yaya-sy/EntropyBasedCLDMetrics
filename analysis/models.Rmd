@@ -110,7 +110,7 @@ summary(experiment_2A_mother_model)
 ```
 
 
-# Experiment 2A
+# Experiment 2B
 
 ```{r}
 experiment_2B_child_model <- lmer(entropy ~ age + (1 + age|family),

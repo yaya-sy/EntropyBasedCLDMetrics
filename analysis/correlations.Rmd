@@ -10,8 +10,18 @@ editor_options:
 ```{r, include=FALSE}
 library(ggplot2)
 library(dplyr)
+library(tidyverse)
 library(lme4)
+library(sjPlot)
+library(ggfortify)
 library(svglite)
+library(ggeffects)
+library(saemix)
+library(ggpubr)
+library(patchwork)
+library("tools")
+library("ggblend")
+library("forcats")
 ```
 
 ```{r}

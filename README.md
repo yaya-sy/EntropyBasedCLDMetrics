@@ -6,10 +6,10 @@ Github repository accompanying the paper "Measuring language development from ch
 
 **Repository organization**
 
-- `checkpoints/` contains all the trained model (`.pt` for pytorch models and `.arpa` for [KenLM](https://github.com/kpu/kenlm) language models)
 - `configs/` contains all the necessary options to train/test the models.
 - `src/` contains all the python source code.
 - `analysis/` contains all the R notebook for analysing the results.
+- `plots` contains the graphics reported in the paper.
 
 For reproducing all the experiments, you will need to:
 
@@ -190,7 +190,7 @@ python src/compute_entropies_ngram_lm.py
 
 This will create a csv file named `Librispeech_360h.csv` in the folder `results`.
 
-## Experiment 2A: Entropy predictions using Thomas data
+## Experiment 2A: Entropy predictions using Thomas test data
 
 ```bash
 python src/compute_entropies_whisper.py -c configs/test.yaml -m checkpoints/Thomas_30h_Librispeech360_en.pt
@@ -198,7 +198,7 @@ python src/compute_entropies_whisper.py -c configs/test.yaml -m checkpoints/Thom
 
 This will create a csv file named `Thomas_30h_Librispeech360_en.csv` in the folder `results`.
 
-## Experiment 2B: Entropy predictions using Librispeech data
+## Experiment 2B: Entropy predictions using Librispeech test data
 
 ```bash
 python src/compute_entropies_whisper.py -c configs/test.yaml -m checkpoints/Librispeech_100h_Librispeech360_en.pt
