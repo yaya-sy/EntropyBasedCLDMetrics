@@ -65,8 +65,8 @@ plot <- function(data, limits){
 ```{r}
 plot_exp1A <- plot(experiment_1A, c(2, 8))
 plot_exp1B <- plot(experiment_1B, c(2, 8))
-plot_exp1C <- plot(experiment_1C, NULL)
-plot_exp2A <- plot(experiment_2A, NULL)
+plot_exp1C <- plot(experiment_1C, c(2.7, 3.8))
+plot_exp2A <- plot(experiment_2A, c(2.7, 3.8))
 ```
 
 ```{r}
@@ -75,7 +75,7 @@ plt <- ggarrange(plot_exp1A + rremove("xlab") + rremove("x.text"),
                  plot_exp1C,
                  plot_exp2A + rremove("ylab") + rremove("y.text"),
                  labels = c("1A", "1B", "1C", "2A"),
-                 hjust = c(-15.8, -13.5, -15.8, -13.5),
+                 hjust = c(-13.8, -11.8, -14.0, -11.8),
                  heights = c(4, 4, 4, 4),
                  widths = c(4.6, 4, 4.6, 4),
                  align = "h",
@@ -92,7 +92,7 @@ mkdir ../plots
 
 
 ```{r}
-ggsave("../plots/results_1A_1B_1C_2A.png", plot = plt, width = 8, height = 7, bg="white")
+ggsave("../plots/results_1A_1B_1C_2A_scaled.png", plot = plt, width = 8, height = 7, bg="white")
 ```
 
 
