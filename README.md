@@ -1,7 +1,6 @@
 # EntropyBasedCLDMetrics
 
-Github repository accompanying the paper "Measuring language development from child-centered recordings".
-
+Github repository accompanying the paper [Measuring language development from child-centered recordings](https://ehess.hal.science/halshs-04294822v1)
 ----
 
 **Repository organization**
